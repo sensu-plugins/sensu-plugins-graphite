@@ -33,7 +33,6 @@
 #   for details.
 #
 
-require 'rubygems' if RUBY_VERSION < '1.9.0'
 require 'json'
 require 'net/http'
 require 'sensu-plugin/check/cli'

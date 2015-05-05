@@ -6,7 +6,6 @@
 # This will send a 1 to a graphite metric when an event is created and 0 when it's resolved
 # See http://imansson.wordpress.com/2012/11/26/why-sensu-is-a-monitoring-router-some-cool-handlers/
 
-require 'rubygems' if RUBY_VERSION < '1.9.0'
 require 'sensu-handler'
 require 'simple-graphite'
 
