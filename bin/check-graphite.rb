@@ -202,7 +202,7 @@ class Graphite < Sensu::Plugin::Check::CLI
     if data.size > 0
       data.each { |d| @graphite_cache[target] << { target: d['target'], period: @period, datapoints: d['datapoints'] } }
       graphite_cache target
-    else
+    else # rubocop:disable all
       nil
     end
   end
@@ -223,7 +223,7 @@ class Graphite < Sensu::Plugin::Check::CLI
   def get_max_value(values)
     if values
       values.map { |i| i[0] ? i[0] : 0 }[0..-2].max
-    else
+    else # rubocop:disable all
       nil
     end
   end
@@ -252,7 +252,7 @@ class Graphite < Sensu::Plugin::Check::CLI
         ret.push(values[values_size]) if values[values_size][0]
       end
       ret
-    else
+    else # rubocop:disable all
       nil
     end
   end
@@ -466,7 +466,7 @@ class Graphite < Sensu::Plugin::Check::CLI
     [warnings, criticals, fatal]
   end
 
-  def run
+  def run # rubocop:disable all
     targets = config[:target].split(',')
     @period = config[:period]
     critical_errors = []
