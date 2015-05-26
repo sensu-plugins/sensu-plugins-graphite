@@ -33,7 +33,6 @@
 # DEPENDENCIES:
 #   gem: sensu-plugin
 #   gem: rest-client
-#   gem: json
 #   gem: ipaddress
 #   gem: resolv
 #

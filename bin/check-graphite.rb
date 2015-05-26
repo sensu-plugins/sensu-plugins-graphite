@@ -13,10 +13,7 @@
 #
 # DEPENDENCIES:
 #   gem: sensu-plugin
-#   gem: json
-#   gem: socket
 #   gem: array_stats
-#   gem: net/http
 #
 # USAGE:
 #   #YELLOW

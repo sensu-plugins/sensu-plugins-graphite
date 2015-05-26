@@ -20,7 +20,6 @@
 #
 # DEPENDENCIES:
 #   gem: sensu-plugin
-#   gem: <?>
 #
 # USAGE:
 #   example commands

@@ -13,8 +13,6 @@
 #
 # DEPENDENCIES:
 #   gem: sensu-plugin
-#   gem: json
-#   gem: open-uri
 #   gem: openssl
 #
 # USAGE:
