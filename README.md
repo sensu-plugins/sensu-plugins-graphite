@@ -15,8 +15,8 @@
  * bin/check-graphite-stats
  * bin/check-graphite
  * bin/extension-graphite
- * bin/handlr-graphite-event
- * bin/hanlder-graphite-notify
+ * bin/handler-graphite-event
+ * bin/handler-graphite-notify
  * bin/handler-graphite-occurances
  * bin/mutator-graphite
 
