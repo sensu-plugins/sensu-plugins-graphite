@@ -4,22 +4,21 @@
 # ===
 #
 # DESCRIPTION:
-#   I extend OnlyCheckOutput mutator specialy for Graphite.
-#   This mutator only send event output (so you don't need to use
-#   OnlyCheckOutput) and change parameter name if it is hostname
-#   for better view in Graphite.
+#   This mutator is an extension of the OnlyCheckOutput mutator, but
+#   modified for Graphite metrics. This mutator only sends event output
+#   (so you don't need to use OnlyCheckOutput) and it also modifies
+#   the format of the hostname in the output if present.
 #
 # OUTPUT:
-#   event output with all dot changed to underline in host name
-#   If -r or --reverse parameter given script put hostname in
-#   reverse order for better graphite tree view
+#   Sensu event output with all dots changed to underlines in host name
+#   If -r or --reverse parameter given script put hostname in reverse order
+#   for better graphite tree view
 #
 # PLATFORM:
 #   all
 #
 # DEPENDENCIES:
-#
-#   json Ruby gem
+#   none
 #
 # Copyright 2013 Peter Kepes <https://github.com/kepes>
 #
