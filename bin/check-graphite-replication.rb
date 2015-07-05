@@ -34,12 +34,9 @@
 #   gem: sensu-plugin
 #   gem: rest-client
 #   gem: ipaddress
-#   gem: resolv
 #
 # USAGE:
 #   #YELLOW
-#
-# NOTES:
 #
 # LICENSE:
 #   AJ Bourg <aj@ajbourg.com>
