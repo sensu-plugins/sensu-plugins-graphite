@@ -38,7 +38,7 @@ Gem::Specification.new do |s|
   s.version                = SensuPluginsGraphite::Version::VER_STRING
 
   s.add_runtime_dependency 'rest-client',      '1.8.0'
-  s.add_runtime_dependency 'sensu-plugin',     '1.1.0'
+  s.add_runtime_dependency 'sensu-plugin',     '1.2.0'
   s.add_runtime_dependency 'ipaddress',        '0.8.0'
   s.add_runtime_dependency 'simple-graphite',  '2.1.0'
   s.add_runtime_dependency 'array_stats',      '0.6.0'
