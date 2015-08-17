@@ -119,6 +119,12 @@ class CheckGraphiteData < Sensu::Plugin::Check::CLI
          short: '-h',
          long: '--help'
 
+  option :auth,
+         description: 'Add an auth token to the HTTP request, in the form of "Name: Value",
+                                     e.g. --auth yourapitokenvaluegoeshere',
+         short: '-a TOKEN',
+         long: '--auth TOKEN'
+
   # Run checks
   def run
     if config[:help]
@@ -149,6 +155,46 @@ class CheckGraphiteData < Sensu::Plugin::Check::CLI
     end
   end
 
+  def format_url_opts(given_opts)
+    url_opts = {}
+
+    if given_opts[:no_ssl_verify]
+      url_opts[:ssl_verify_mode] = OpenSSL::SSL::VERIFY_NONE
+    end
+
+    if given_opts[:username] && (given_opts[:password] || given_opts[:passfile])
+      if given_opts[:passfile]
+        pass = File.open(given_opts[:passfile]).readline
+      elsif given_opts[:password]
+        pass = given_opts[:password]
+      end
+
+      url_opts[:http_basic_authentication] = [given_opts[:username], pass.chomp]
+    end # we don't have both username and password trying without
+
+    if given_opts[:auth]
+      header = "Bearer #{given_opts[:auth]}"
+      url_opts['Authorization'] = header
+    end
+
+    url_opts
+  end
+
+  def format_output
+    output = {}
+    @json_data.each do |raw|
+      raw['datapoints'].delete_if { |v| v.first.nil? }
+      next if raw['datapoints'].empty?
+      target = raw['target']
+      data = raw['datapoints'].map(&:first)
+      start = raw['datapoints'].first.last
+      dend = raw['datapoints'].last.last
+      step = ((dend - start) / raw['datapoints'].size.to_f).ceil
+      output[target] = { 'target' => target, 'data' => data, 'start' => start, 'end' => dend, 'step' => step }
+    end
+    output
+  end
+
   # grab data from graphite
   def retrieve_data
     # #YELLOW
@@ -160,41 +206,14 @@ class CheckGraphiteData < Sensu::Plugin::Check::CLI
 
         url = "#{config[:server]}/render?format=json&target=#{formatted_target}&from=#{config[:from]}"
 
-        url_opts = {}
-
-        if config[:no_ssl_verify]
-          url_opts[:ssl_verify_mode] = OpenSSL::SSL::VERIFY_NONE
-        end
-
-        if config[:username] && (config[:password] || config[:passfile])
-          if config[:passfile]
-            pass = File.open(config[:passfile]).readline
-          elsif config[:password]
-            pass = config[:password]
-          end
-
-          url_opts[:http_basic_authentication] = [config[:username], pass.chomp]
-        end # we don't have both username and password trying without
-
-        handle = open(url, url_opts)
+        handle = open(url, format_url_opts(config))
 
         @raw_data = handle.gets
         if @raw_data == '[]'
           unknown 'Empty data received from Graphite - metric probably doesn\'t exists'
         else
           @json_data = JSON.parse(@raw_data)
-          output = {}
-          @json_data.each do |raw|
-            raw['datapoints'].delete_if { |v| v.first.nil? }
-            next if raw['datapoints'].empty?
-            target = raw['target']
-            data = raw['datapoints'].map(&:first)
-            start = raw['datapoints'].first.last
-            dend = raw['datapoints'].last.last
-            step = ((dend - start) / raw['datapoints'].size.to_f).ceil
-            output[target] = { 'target' => target, 'data' => data, 'start' => start, 'end' => dend, 'step' => step }
-          end
-          output
+          format_output
         end
       rescue OpenURI::HTTPError
         unknown 'Failed to connect to graphite server'
