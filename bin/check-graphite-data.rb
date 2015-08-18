@@ -34,18 +34,17 @@ require 'openssl'
 require 'sensu-plugins-graphite/graphite_proxy/options'
 require 'sensu-plugins-graphite/graphite_proxy/proxy'
 
-
 class CheckGraphiteData < Sensu::Plugin::Check::CLI
-  
+
   include SensuPluginsGraphite::GraphiteProxy::Options
 
   option :reset_on_decrease,
-         description: 'Send OK if value has decreased on any values within END-INTERVAL to END',
-         short: '-r INTERVAL',
-         long: '--reset INTERVAL',
-         proc: proc(&:to_i)
+    description: 'Send OK if value has decreased on any values within END-INTERVAL to END',
+    short: '-r INTERVAL',
+    long: '--reset INTERVAL',
+    proc: proc(&:to_i)
 
-  
+
   # Run checks
   def run
     if config[:help]
@@ -57,10 +56,10 @@ class CheckGraphiteData < Sensu::Plugin::Check::CLI
     begin
       results = proxy.retrieve_data!
       results.each_pair do |_key, value|
-       @value = value
-       @data = value['data']
-       check_age || check(:critical) || check(:warning)
-     end
+        @value = value
+        @data = value['data']
+        check_age || check(:critical) || check(:warning)
+      end
 
       ok("#{name} value okay")
     rescue SensuPluginsGraphite::GraphiteProxy::ProxyException => e
