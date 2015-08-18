@@ -31,7 +31,6 @@ require 'sensu-plugin/check/cli'
 require 'json'
 require 'open-uri'
 require 'openssl'
-require 'byebug'
 
 require 'sensu-plugins-graphite/graphite_proxy/options'
 require 'sensu-plugins-graphite/graphite_proxy/proxy'
