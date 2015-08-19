@@ -44,6 +44,12 @@ class CheckGraphiteData < Sensu::Plugin::Check::CLI
     long: '--reset INTERVAL',
     proc: proc(&:to_i)
 
+  option :allowed_graphite_age, 
+         description: 'Allowed number of seconds since last data update (default: 60 seconds)',
+         short: '-a SECONDS',
+         long: '--age SECONDS',
+         default: 60,
+         proc: proc(&:to_i)
 
   # Run checks
   def run
@@ -62,8 +68,7 @@ class CheckGraphiteData < Sensu::Plugin::Check::CLI
       end
 
       ok("#{name} value okay")
-    rescue SensuPluginsGraphite::GraphiteProxy::ProxyException => e
-      puts e.backtrace
+    rescue SensuPluginsGraphite::GraphiteProxy::ProxyError => e
       unknown e.message
     end
   end

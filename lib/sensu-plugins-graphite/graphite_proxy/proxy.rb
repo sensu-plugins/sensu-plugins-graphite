@@ -3,7 +3,14 @@ require 'open-uri'
 
 module SensuPluginsGraphite
   module GraphiteProxy
-    class ProxyException < Exception; end
+    class ProxyError < StandardError
+      attr_accessor :exception
+
+      def initialize(msg, args)
+        self.exception = args[:exception]
+        super msg
+      end
+    end
 
     class Proxy
       attr_accessor  :config
@@ -90,17 +97,17 @@ module SensuPluginsGraphite
               format_output(json_data)
             end
           rescue OpenURI::HTTPError => e
-            raise ProxyException.new('Failed to connect to graphite server', exception: e)
+            raise ProxyError.new('Failed to connect to graphite server', exception: e)
           rescue NoMethodError => e
-            raise ProxyException.new('No data for time period and/or target', exception: e)
+            raise ProxyError.new('No data for time period and/or target', exception: e)
           rescue Errno::ECONNREFUSED => e
-            raise ProxyException.new('Connection refused when connecting to graphite server', exception: e)
+            raise ProxyError.new('Connection refused when connecting to graphite server', exception: e)
           rescue Errno::ECONNRESET => e
-            raise ProxyException.new('Connection reset by peer when connecting to graphite server', exception: e)
+            raise ProxyError.new('Connection reset by peer when connecting to graphite server', exception: e)
           rescue EOFError => e
-            raise ProxyException.new('End of file error when reading from graphite server', exception: e)
+            raise ProxyError.new('End of file error when reading from graphite server', exception: e)
           rescue => e
-            raise  ProxyException.new("An unknown error occured: #{e.inspect}", exception: e)
+            raise  ProxyError.new("An unknown error occured: #{e.inspect}", exception: e)
           end
         end
       end

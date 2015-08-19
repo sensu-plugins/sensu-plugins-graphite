@@ -75,14 +75,6 @@ module SensuPluginsGraphite
                  default: 'graphite check'
           },
 
-          allowed_graphite_age: {
-                 description: 'Allowed number of seconds since last data update (default: 60 seconds)',
-                 short: '-a SECONDS',
-                 long: '--age SECONDS',
-                 default: 60,
-                 proc: proc(&:to_i)
-          },
-
           hostname_sub: {
                  description: 'Character used to replace periods (.) in hostname (default: _)',
                  short: '-s CHARACTER',
