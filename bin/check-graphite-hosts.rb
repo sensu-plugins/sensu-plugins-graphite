@@ -36,7 +36,6 @@ require 'sensu-plugins-graphite/graphite_proxy/options'
 require 'sensu-plugins-graphite/graphite_proxy/proxy'
 
 class CheckGraphiteHosts < Sensu::Plugin::Check::CLI
-
   include SensuPluginsGraphite::GraphiteProxy::Options
 
   # Run checks
@@ -49,11 +48,10 @@ class CheckGraphiteHosts < Sensu::Plugin::Check::CLI
     proxy = SensuPluginsGraphite::GraphiteProxy::Proxy.new(config)
     begin
       results = proxy.retrieve_data!
-      check_age(results) || check(:critical, results) || check(:warning, results)
 
+      check(:critical, results) || check(:warning, results)
       ok("#{name} value (#{hosts_with_data(results)}) okay")
-    rescue SensuPluginsGraphite::GraphiteProxy::ProxyException => e
-      puts e.backtrace
+    rescue SensuPluginsGraphite::GraphiteProxy::ProxyError => e
       unknown e.message
     end
   end
@@ -64,21 +62,10 @@ class CheckGraphiteHosts < Sensu::Plugin::Check::CLI
     @formatted ? "#{base} (#{@formatted})" : base
   end
 
-  # Check the age of the data being processed
-  def check_age(results)
-    # #YELLOW
-    hosts_too_old = results.select{ |_host, values| (Time.now.to_i - values['end']) > config[:allowed_graphite_age] }
-    hosts_too_old.each do |host, values|
-      if (Time.now.to_i - values['end']) > config[:allowed_graphite_age]
-        return unknown "Graphite data age for host #{host} is past allowed threshold (#{config[:allowed_graphite_age]} seconds)"
-      end
-    end
-    nil
-  end
 
   # return the number of hosts with data in the given set of results
   def hosts_with_data(resultset)
-    resultset.select{ |_host, values| !values["data"].empty? }.count
+    resultset.count { |_host, values| !values['data'].empty? }
   end
 
   # type:: :warning or :critical
@@ -86,9 +73,18 @@ class CheckGraphiteHosts < Sensu::Plugin::Check::CLI
   def check(type, results)
     # #YELLOW
     num_hosts = hosts_with_data(results)
-    if config[type]
-      send(type, "Number of hosts sending #{config[:target]} (#{num_hosts}) has passed #{type} threshold (#{config[type]})") if below?(type, num_hosts) || above?(type, num_hosts)
+    if config[type] && threshold_crossed?(type, num_hosts)
+      msg = hosts_threshold_message(config[:target], num_hosts, type)
+      send(type, msg)
     end
+  end
+
+  def threshold_crossed?(type, num_hosts)
+    below?(type, num_hosts) || above?(type, num_hosts)
+  end
+
+  def hosts_threshold_message(target, hosts, type)
+    "Number of hosts sending #{target} (#{hosts}) has passed #{type} threshold (#{config[type]})"
   end
 
   # Check if value is below defined threshold
@@ -98,7 +94,6 @@ class CheckGraphiteHosts < Sensu::Plugin::Check::CLI
 
   # Check is value is above defined threshold
   def above?(type, val)
-    (!config[:below]) && (val > config[type])
+    (!config[:below]) && (val > config[type]) 
   end
-
 end
