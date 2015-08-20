@@ -51,7 +51,6 @@ module SensuPluginsGraphite
         end
       end
 
-
       def format_output(data)
         output = {}
 

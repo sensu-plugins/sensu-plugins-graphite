@@ -62,7 +62,6 @@ class CheckGraphiteHosts < Sensu::Plugin::Check::CLI
     @formatted ? "#{base} (#{@formatted})" : base
   end
 
-
   # return the number of hosts with data in the given set of results
   def hosts_with_data(resultset)
     resultset.count { |_host, values| !values['data'].empty? }
@@ -73,10 +72,10 @@ class CheckGraphiteHosts < Sensu::Plugin::Check::CLI
   def check(type, results)
     # #YELLOW
     num_hosts = hosts_with_data(results)
-    if config[type] && threshold_crossed?(type, num_hosts)
-      msg = hosts_threshold_message(config[:target], num_hosts, type)
-      send(type, msg)
-    end
+    return unless config[type] && threshold_crossed?(type, num_hosts)
+
+    msg = hosts_threshold_message(config[:target], num_hosts, type)
+    send(type, msg)
   end
 
   def threshold_crossed?(type, num_hosts)
@@ -94,6 +93,6 @@ class CheckGraphiteHosts < Sensu::Plugin::Check::CLI
 
   # Check is value is above defined threshold
   def above?(type, val)
-    (!config[:below]) && (val > config[type]) 
+    (!config[:below]) && (val > config[type])
   end
 end

@@ -61,10 +61,10 @@ class CheckGraphiteData < Sensu::Plugin::Check::CLI
     begin
       results = proxy.retrieve_data!
       results.each_pair do |_key, value|
-       @value = value
-       @data = value['data']
-       check_age || check(:critical) || check(:warning)
-     end
+        @value = value
+        @data = value['data']
+        check_age || check(:critical) || check(:warning)
+      end
 
       ok("#{name} value okay")
     rescue SensuPluginsGraphite::GraphiteProxy::ProxyError => e
