@@ -31,60 +31,17 @@ require 'json'
 require 'open-uri'
 require 'openssl'
 
+require 'sensu-plugins-graphite/graphite_proxy/options'
+require 'sensu-plugins-graphite/graphite_proxy/proxy'
+
 class CheckGraphiteData < Sensu::Plugin::Check::CLI
-  option :target,
-         description: 'Graphite data target',
-         short: '-t TARGET',
-         long: '--target TARGET',
-         required: true
-
-  option :server,
-         description: 'Server host and port',
-         short: '-s SERVER:PORT',
-         long: '--server SERVER:PORT',
-         required: true
-
-  option :username,
-         description: 'username for basic http authentication',
-         short: '-u USERNAME',
-         long: '--user USERNAME',
-         required: false
-
-  option :password,
-         description: 'user password for basic http authentication',
-         short: '-p PASSWORD',
-         long: '--pass PASSWORD',
-         required: false
-
-  option :passfile,
-         description: 'password file path for basic http authentication',
-         short: '-P PASSWORDFILE',
-         long: '--passfile PASSWORDFILE',
-         required: false
-
-  option :warning,
-         description: 'Generate warning if given value is above received value',
-         short: '-w VALUE',
-         long: '--warn VALUE',
-         proc: proc(&:to_f)
-
-  option :critical,
-         description: 'Generate critical if given value is above received value',
-         short: '-c VALUE',
-         long: '--critical VALUE',
-         proc: proc(&:to_f)
+  include SensuPluginsGraphite::GraphiteProxy::Options
 
   option :reset_on_decrease,
          description: 'Send OK if value has decreased on any values within END-INTERVAL to END',
          short: '-r INTERVAL',
          long: '--reset INTERVAL',
          proc: proc(&:to_i)
-
-  option :name,
-         description: 'Name used in responses',
-         short: '-n NAME',
-         long: '--name NAME',
-         default: 'graphite check'
 
   option :allowed_graphite_age,
          description: 'Allowed number of seconds since last data update (default: 60 seconds)',
@@ -93,32 +50,6 @@ class CheckGraphiteData < Sensu::Plugin::Check::CLI
          default: 60,
          proc: proc(&:to_i)
 
-  option :hostname_sub,
-         description: 'Character used to replace periods (.) in hostname (default: _)',
-         short: '-s CHARACTER',
-         long: '--host-sub CHARACTER'
-
-  option :from,
-         description: 'Get samples starting from FROM (default: -10mins)',
-         short: '-f FROM',
-         long: '--from FROM',
-         default: '-10mins'
-
-  option :below,
-         description: 'warnings/critical if values below specified thresholds',
-         short: '-b',
-         long: '--below'
-
-  option :no_ssl_verify,
-         description: 'Do not verify SSL certs',
-         short: '-v',
-         long: '--nosslverify'
-
-  option :help,
-         description: 'Show this message',
-         short: '-h',
-         long: '--help'
-
   # Run checks
   def run
     if config[:help]
@@ -126,13 +57,19 @@ class CheckGraphiteData < Sensu::Plugin::Check::CLI
       exit
     end
 
-    data = retrieve_data
-    data.each_pair do |_key, value|
-      @value = value
-      @data = value['data']
-      check_age || check(:critical) || check(:warning)
+    proxy = SensuPluginsGraphite::GraphiteProxy::Proxy.new(config)
+    begin
+      results = proxy.retrieve_data!
+      results.each_pair do |_key, value|
+        @value = value
+        @data = value['data']
+        check_age || check(:critical) || check(:warning)
+      end
+
+      ok("#{name} value okay")
+    rescue SensuPluginsGraphite::GraphiteProxy::ProxyError => e
+      unknown e.message
     end
-    ok("#{name} value okay")
   end
 
   # name used in responses
@@ -236,17 +173,6 @@ class CheckGraphiteData < Sensu::Plugin::Check::CLI
       !slice.empty?
     else
       false
-    end
-  end
-
-  # Returns formatted target with hostname replacing any $ characters
-  def formatted_target
-    if config[:target].include?('$')
-      require 'socket'
-      @formatted = Socket.gethostbyname(Socket.gethostname).first.gsub('.', config[:hostname_sub] || '_')
-      config[:target].gsub('$', @formatted)
-    else
-      URI.escape config[:target]
     end
   end
 end

@@ -4,7 +4,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachangelog.com/)
 
 ## [Unreleased]
-- nothing
+### Added
+- check on number of hosts
 
 ## [0.0.5] - 2015-08-05
 ### Changed
