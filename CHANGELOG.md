@@ -4,7 +4,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachangelog.com/)
 
 ## [Unreleased]
-- nothing
+### Added
+- --auth param allows authentication by bearer token
 
 ## [0.0.5] - 2015-08-05
 ### Changed
