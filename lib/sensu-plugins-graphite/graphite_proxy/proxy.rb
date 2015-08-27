@@ -76,8 +76,7 @@ module SensuPluginsGraphite
 
       # grab data from graphite
       def retrieve_data!
-        # #YELLOW
-        unless @raw_data # rubocop:disable GuardClause
+        unless @raw_data
           begin
             unless config[:server].start_with?('https://', 'http://')
               config[:server].prepend('http://')
