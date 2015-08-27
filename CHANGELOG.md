@@ -6,6 +6,7 @@ This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachang
 ## [Unreleased]
 ### Added
 - check on number of hosts
+- -auth param allows authentication by bearer token
 
 ## [0.0.5] - 2015-08-05
 ### Changed

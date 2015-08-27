@@ -85,6 +85,7 @@ class CheckGraphiteData < Sensu::Plugin::Check::CLI
     end
   end
 
+<<<<<<< HEAD
   # grab data from graphite
   def retrieve_data
     unless @raw_data
@@ -152,6 +153,14 @@ class CheckGraphiteData < Sensu::Plugin::Check::CLI
   def check(type)
     if config[type]
       send(type, "#{@value['target']} has passed #{type} threshold (#{@data.last})") if below?(type) || above?(type)
+=======
+  # type:: :warning or :critical
+  # Return alert if required
+  def check(type)
+    # #YELLOW
+    if config[type] # rubocop:disable GuardClause
+      send(type, "value (#{@data.last}) for #{@value['target']} has passed #{type} threshold (#{config[type]})") if below?(type) || above?(type)
+>>>>>>> b6a092adbb33662ed331e5d97cb0a7b69f0c9cfe
     end
   end
 
