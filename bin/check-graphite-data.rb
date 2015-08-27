@@ -143,16 +143,14 @@ class CheckGraphiteData < Sensu::Plugin::Check::CLI
 
   # Check the age of the data being processed
   def check_age
-    # #YELLOW
-    if (Time.now.to_i - @value['end']) > config[:allowed_graphite_age] # rubocop:disable GuardClause
+    if (Time.now.to_i - @value['end']) > config[:allowed_graphite_age]
       unknown "Graphite data age is past allowed threshold (#{config[:allowed_graphite_age]} seconds)"
     end
   end
 
   # grab data from graphite
   def retrieve_data
-    # #YELLOW
-    unless @raw_data # rubocop:disable GuardClause
+    unless @raw_data
       begin
         unless config[:server].start_with?('https://', 'http://')
           config[:server].prepend('http://')
@@ -215,8 +213,7 @@ class CheckGraphiteData < Sensu::Plugin::Check::CLI
   # type:: :warning or :critical
   # Return alert if required
   def check(type)
-    # #YELLOW
-    if config[type] # rubocop:disable GuardClause
+    if config[type]
       send(type, "#{@value['target']} has passed #{type} threshold (#{@data.last})") if below?(type) || above?(type)
     end
   end

@@ -148,7 +148,7 @@ class Graphite < Sensu::Plugin::Check::CLI
 
   def graphite_cache(target = nil)
     # #YELLOW
-    if @graphite_cache.key?(target) # rubocop:disable GuardClause
+    if @graphite_cache.key?(target)
       graphite_value = @graphite_cache[target].select { |value| value[:period] == @period }
       graphite_value if graphite_value.size > 0
     end
@@ -199,8 +199,6 @@ class Graphite < Sensu::Plugin::Check::CLI
     if data.size > 0
       data.each { |d| @graphite_cache[target] << { target: d['target'], period: @period, datapoints: d['datapoints'] } }
       graphite_cache target
-    else # rubocop:disable all
-      nil
     end
   end
 
@@ -220,8 +218,6 @@ class Graphite < Sensu::Plugin::Check::CLI
   def get_max_value(values)
     if values
       values.map { |i| i[0] ? i[0] : 0 }[0..-2].max
-    else # rubocop:disable all
-      nil
     end
   end
 
@@ -249,8 +245,6 @@ class Graphite < Sensu::Plugin::Check::CLI
         ret.push(values[values_size]) if values[values_size][0]
       end
       ret
-    else # rubocop:disable all
-      nil
     end
   end
 
@@ -291,7 +285,7 @@ class Graphite < Sensu::Plugin::Check::CLI
     last_gv = last_graphite_value target
     if last_gv.is_a?(Hash) && max_gv.is_a?(Hash)
       # #YELLOW
-      last_gv.each do |target_name, value| # rubocop:disable Style/Next
+      last_gv.each do |target_name, value|
         if value && max_gv[target_name]
           last = value
           max = max_gv[target_name]
@@ -326,7 +320,7 @@ class Graphite < Sensu::Plugin::Check::CLI
       last_value = last_values[target]
       percent = last_value / avg_value unless last_value.nil? || avg_value.nil?
       # #YELLOW
-      %w(fatal error warning).each do |type|  # rubocop:disable Style/Next
+      %w(fatal error warning).each do |type|
         next unless max_values.key?(type)
         max_value = max_values[type]
         var1 = config[:greater_than] ? percent : max_value.to_f
@@ -363,7 +357,7 @@ class Graphite < Sensu::Plugin::Check::CLI
       # #YELLOW
       avg_value = values_array.reduce { |sum, el| sum + el if el }.to_f / values_array.size # rubocop:disable SingleLineBlockParams
       # YELLOW
-      %w(fatal error warning).each do |type|  # rubocop:disable Style/Next
+      %w(fatal error warning).each do |type|
         next unless max_values.key?(type)
         max_value = max_values[type]
         var1 = config[:greater_than] ? avg_value : max_value.to_f
@@ -402,7 +396,7 @@ class Graphite < Sensu::Plugin::Check::CLI
       last_value = last_values[target]
       percent = last_value / percentile_value unless last_value.nil? || percentile_value.nil?
       # #YELLOW
-      %w(fatal error warning).each do |type|  # rubocop:disable Style/Next
+      %w(fatal error warning).each do |type|
         next unless max_values.key?(type)
         max_value = max_values[type]
         var1 = config[:greater_than] ? percent : max_value.to_f
@@ -434,11 +428,11 @@ class Graphite < Sensu::Plugin::Check::CLI
     criticals = []
     fatal = []
     # #YELLOW
-    last_targets.each do |target_name, last|   # rubocop:disable Style/Next
+    last_targets.each do |target_name, last|
       last_value = last.first
       unless last_value.nil?
         # #YELLOW
-        %w(fatal error warning).each do |type|   # rubocop:disable Style/Next
+        %w(fatal error warning).each do |type|
           next unless max_values.key?(type)
           max_value = max_values[type]
           var1 = config[:greater_than] ? last_value : max_value.to_f
@@ -463,14 +457,14 @@ class Graphite < Sensu::Plugin::Check::CLI
     [warnings, criticals, fatal]
   end
 
-  def run # rubocop:disable all
+  def run
     targets = config[:target].split(',')
     @period = config[:period]
     critical_errors = []
     warnings = []
     fatals = []
     # #YELLOW
-    targets.each do |target|   # rubocop:disable Style/Next
+    targets.each do |target|
       if config[:check_function_increasing]
         inc_warnings, inc_critical, inc_fatal = check_increasing target
         warnings += inc_warnings
