@@ -79,6 +79,13 @@ class CheckGraphiteStat < Sensu::Plugin::Check::CLI
          boolean: true,
          default: false
 
+  option :reverse_scale,
+         short: '-r',
+         long: '--reverse-scale',
+         description: "Reverse the warning/crit scale (if value is less than instead of greater than)",
+         boolean: true,
+         default: false
+
   def average(a)
     total = 0
     a.to_a.each { |i| total += i.to_f }
@@ -92,11 +99,18 @@ class CheckGraphiteStat < Sensu::Plugin::Check::CLI
     # #YELLOW
     unless datapoints.empty? # rubocop:disable UnlessElse
       avg = average(datapoints)
-
-      if !config[:crit].nil? && avg > config[:crit]
-        return [2, "#{metric['target']} is #{avg}"]
-      elsif !config[:warn].nil? && avg > config[:warn]
-        return [1, "#{metric['target']} is #{avg}"]
+      if config[:reverse_scale] == false
+        if !config[:crit].nil? && avg > config[:crit]
+          return [2, "#{metric['target']} is #{avg}"]
+        elsif !config[:warn].nil? && avg > config[:warn]
+          return [1, "#{metric['target']} is #{avg}"]
+        end
+      else
+        if !config[:crit].nil? && avg < config[:crit]
+          return [2, "#{metric['target']} is #{avg}"]
+        elsif !config[:warn].nil? && avg < config[:warn]
+          return [1, "#{metric['target']} is #{avg}"]
+        end
       end
     else
       return [3, "#{metric['target']} has no datapoints"] unless config[:unknown_ignore]
