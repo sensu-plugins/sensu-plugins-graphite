@@ -82,7 +82,7 @@ class CheckGraphiteStat < Sensu::Plugin::Check::CLI
   option :reverse_scale,
          short: '-r',
          long: '--reverse-scale',
-         description: "Reverse the warning/crit scale (if value is less than instead of greater than)",
+         description: 'Reverse the warning/crit scale (if value is less than instead of greater than)',
          boolean: true,
          default: false
 
