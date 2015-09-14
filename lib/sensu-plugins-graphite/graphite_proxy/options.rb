@@ -63,7 +63,7 @@ module SensuPluginsGraphite
           auth: {
             description: 'Add an auth token to the HTTP request, in the form of "Name: Value",
                                              e.g. --auth yourapitokenvaluegoeshere',
-            short: '-a TOKEN',
+            short: '-A TOKEN',
             long: '--auth TOKEN'
           },
 
