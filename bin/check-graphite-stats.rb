@@ -121,7 +121,7 @@ class CheckGraphiteStat < Sensu::Plugin::Check::CLI
   def run
     body =
       begin
-        uri = URI("http://#{config[:host]}/render?format=json&target=#{config[:target]}&from=#{config[:period]}")
+        uri = URI.parse(URI.encode("http://#{config[:host]}/render?format=json&target=#{config[:target]}&from=#{config[:period]}"))
         res = Net::HTTP.get_response(uri)
         res.body
       rescue => e
