@@ -5,6 +5,7 @@ This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachang
 
 ## [Unreleased]
 - add -r option (Reverse the warning/crit scale (if value is less than instead of greater than)) to check-graphite-stats.rb
+- The short command line option for 'Add an auth token to the HTTP request' is now -A, -a clashed with the proxy support
 
 ## [0.0.6] - 2015-08-27
 ### Added
