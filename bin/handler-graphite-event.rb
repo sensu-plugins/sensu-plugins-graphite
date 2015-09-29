@@ -26,7 +26,7 @@ class GraphiteEvent < Sensu::Handler
     uri          = URI.parse(uri)
     req          = Net::HTTP::Post.new(uri.path)
     sock         = Net::HTTP.new(uri.host, uri.port)
-    sock.use_ssl = true
+    sock.use_ssl = uri.scheme == 'https' ? true : false
     req.body     = body
 
     req.basic_auth(uri.user, uri.password) if uri.user
