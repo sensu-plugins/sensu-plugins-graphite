@@ -4,8 +4,15 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachangelog.com/)
 
 ## [Unreleased]
+- nothing
+
+## [0.0.7] - 2015-09-29
+### Added
 - add -r option (Reverse the warning/crit scale (if value is less than instead of greater than)) to check-graphite-stats.rb
+
+### Changed
 - The short command line option for 'Add an auth token to the HTTP request' is now -A, -a clashed with the proxy support
+- Set socket's SSL mode only if using HTTPS
 
 ## [0.0.6] - 2015-08-27
 ### Added
