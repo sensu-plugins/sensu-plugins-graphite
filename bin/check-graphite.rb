@@ -463,7 +463,7 @@ class Graphite < Sensu::Plugin::Check::CLI
     [warnings, criticals, fatal]
   end
 
-  def run # rubocop:disable Metrics/AbcSize
+  def run # rubocop:disable AbcSize
     targets = config[:complex_target] ? [config[:target]] : config[:target].split(',')
     @period = config[:period]
     critical_errors = []
