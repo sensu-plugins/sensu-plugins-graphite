@@ -46,6 +46,12 @@ class Graphite < Sensu::Plugin::Check::CLI
          long: '--target TARGET',
          required: true
 
+  option :complex_target,
+         description: 'Allows complex targets which contain functions. Disables splitting on comma.',
+         short: '-x',
+         long: '--complex_target',
+         default: false
+
   option :period,
          description: 'The period back in time to extract from Graphite and compare with. Use 24hours,2days etc, same format as in Graphite',
          short: '-p PERIOD',
@@ -457,8 +463,8 @@ class Graphite < Sensu::Plugin::Check::CLI
     [warnings, criticals, fatal]
   end
 
-  def run
-    targets = config[:target].split(',')
+  def run # rubocop:disable AbcSize
+    targets = config[:complex_target] ? [config[:target]] : config[:target].split(',')
     @period = config[:period]
     critical_errors = []
     warnings = []
