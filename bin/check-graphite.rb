@@ -428,14 +428,13 @@ class Graphite < Sensu::Plugin::Check::CLI
   end
 
   def check_last(target, max_values)
-    last_targets = last_graphite_metric target
+    last_targets = last_graphite_value target
     return [[], [], []] unless last_targets
     warnings = []
     criticals = []
     fatal = []
     # #YELLOW
-    last_targets.each do |target_name, last|
-      last_value = last.first
+    last_targets.each do |target_name, last_value|
       unless last_value.nil?
         # #YELLOW
         %w(fatal error warning).each do |type|
