@@ -29,7 +29,7 @@ Gem::Specification.new do |s|
                                'release_draft'      => 'false',
                                'release_prerelease' => 'false'
                               }
-  s.name                   = 'sensu-plugins-graphite-donotuse'
+  s.name                   = 'sensu-plugins-graphite'
   s.platform               = Gem::Platform::RUBY
   s.post_install_message   = 'You can use the embedded Ruby by setting EMBEDDED_RUBY=true in /etc/default/sensu'
   s.require_paths          = ['lib']
