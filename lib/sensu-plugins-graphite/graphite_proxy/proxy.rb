@@ -67,7 +67,7 @@ module SensuPluginsGraphite
         raw['datapoints'].delete_if { |v| v.first.nil? }
         target = raw['target']
         data = raw['datapoints'].map(&:first)
-        if raw['datapoints'].first != nil && raw['datapoints'].last != nil && raw['datapoints'].size.to_f > 0
+        if !raw['datapoints'].first.nil? && !raw['datapoints'].last.nil? && raw['datapoints'].size.to_f > 0
           start = raw['datapoints'].first.last
           dend = raw['datapoints'].last.last
           rdpsize = raw['datapoints'].size.to_f
