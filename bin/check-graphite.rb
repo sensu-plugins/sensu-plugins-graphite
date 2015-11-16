@@ -449,7 +449,7 @@ class Graphite < Sensu::Plugin::Check::CLI
           var1 = config[:greater_than] ? last_value : max_value.to_f
           var2 = config[:greater_than] ? max_value.to_f : last_value
           if var1 > var2
-            text = "The metric #{target_name} is #{last_value} that is #{greater_less} than max allowed #{max_value}"
+            text = "The metric #{target_name} is #{last_value} that is #{greater_less} than last allowed #{max_value}"
             case type
             when 'warning'
               warnings << text
