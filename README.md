@@ -49,4 +49,14 @@
 
 [Installation and Setup](http://sensu-plugins.io/docs/installation_instructions.html)
 
+## What's "999" value?
+
+999 value for data age has been implemented as a 'dummy value' which should be used to ignore stale hosts issues throwing errors like
+
+```
+CheckGraphiteData UNKNOWN: Graphite data age is past allowed threshold (180 seconds)
+```
+
+When value 999 is used data age checks are not performed.
+
 ## Notes
