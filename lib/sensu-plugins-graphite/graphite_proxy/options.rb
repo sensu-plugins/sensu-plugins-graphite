@@ -87,6 +87,13 @@ module SensuPluginsGraphite
             default: '-10mins'
           },
 
+          until: {
+            description: 'Get samples ending at UNTIL (default: now)',
+            short: '-l UNTIL',
+            long: '--until UNTIL',
+            default: 'now'
+          },
+
           warning: {
             description: 'Generate warning if number of hosts is below received value',
             short: '-w VALUE',
