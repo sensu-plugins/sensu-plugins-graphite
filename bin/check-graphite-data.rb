@@ -46,7 +46,7 @@ class CheckGraphiteData < Sensu::Plugin::Check::CLI
          description: 'Allowed number of seconds since last data update (default: 60 seconds)',
          short: '-a SECONDS',
          long: '--age SECONDS',
-         default: 60,
+         default: 999,
          proc: proc(&:to_i)
 
   # Run checks
