@@ -200,7 +200,7 @@ class Graphite < Sensu::Plugin::Check::CLI
     end
 
     req.set_form_data(params)
-    http = Net::HTTP.new(graphite_url.host, graphite_url.port )
+    http = Net::HTTP.new(graphite_url.host, graphite_url.port)
     if graphite_url.scheme == 'https'
       http.use_ssl = true
     end
