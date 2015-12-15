@@ -30,6 +30,7 @@
 require 'sensu-plugin/check/cli'
 require 'json'
 require 'net/http'
+require 'net/https'
 require 'socket'
 require 'array_stats'
 
@@ -199,7 +200,12 @@ class Graphite < Sensu::Plugin::Check::CLI
     end
 
     req.set_form_data(params)
-    resp = Net::HTTP.new(graphite_url.host, graphite_url.port).start { |http| http.request(req) }
+    nethttp = Net::HTTP.new(graphite_url.host, graphite_url.port)
+    if graphite_url.scheme == 'https'
+      nethttp.use_ssl = true
+    end
+    resp = nethttp.start { |http| http.request(req) }
+
     data = JSON.parse(resp.body)
     @graphite_cache[target] = []
     if data.size > 0
