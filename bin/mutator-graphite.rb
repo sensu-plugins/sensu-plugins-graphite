@@ -9,6 +9,14 @@
 #   (so you don't need to use OnlyCheckOutput) and it also modifies
 #   the format of the hostname in the output if present.
 #
+#   Note however that using this mutator as an mutator command can be very
+#   expensive, as Sensu has to spawn a new Ruby process to launch this script
+#   for each result of a metrics check. Consider instead to produce the correct
+#   metric names from your plugin and send them directly to Graphite via the
+#   socket handler.
+#   See https://groups.google.com/d/msg/sensu-users/1hkRSvL48ck/8Dhl98lR24kJ
+#   for more information.
+#
 # OUTPUT:
 #   Sensu event output with all dots changed to underlines in host name
 #   If -r or --reverse parameter given script put hostname in reverse order
