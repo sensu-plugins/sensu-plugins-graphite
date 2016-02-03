@@ -6,6 +6,10 @@ This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachang
 ## [Unreleased]
 - nothing
 
+## [1.0.0] - 2016-01-20
+### Changed
+- Use the whole client name as hostname for graphite measurement
+
 ## [0.0.7] - 2015-09-29
 ### Added
 - add -r option (Reverse the warning/crit scale (if value is less than instead of greater than)) to check-graphite-stats.rb

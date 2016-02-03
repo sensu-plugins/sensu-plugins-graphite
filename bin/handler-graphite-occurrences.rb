@@ -12,7 +12,7 @@ class GraphiteOccurrences < Sensu::Handler
   def filter; end
 
   def handle
-    hostname = @event['client']['name'].split('.').first
+    hostname = @event['client']['name']
     # #YELLOW
     check_name = @event['check']['name'].gsub(%r{[ \.]}, '_')
     value = @event['action'] == 'create' ? @event['occurrences'] : 0
