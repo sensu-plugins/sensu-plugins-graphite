@@ -28,21 +28,21 @@ module SensuPluginsGraphite
           },
 
           username: {
-            description: 'username for basic http authentication',
+            description: 'Username for basic HTTP authentication',
             short: '-u USERNAME',
             long: '--user USERNAME',
             required: false
           },
 
           password: {
-            description: 'user password for basic http authentication',
+            description: 'User password for basic HTTP authentication',
             short: '-p PASSWORD',
             long: '--pass PASSWORD',
             required: false
           },
 
           passfile: {
-            description: 'password file path for basic http authentication',
+            description: 'Password file path for basic HTTP authentication',
             short: '-P PASSWORDFILE',
             long: '--passfile PASSWORDFILE',
             required: false
@@ -109,7 +109,7 @@ module SensuPluginsGraphite
           },
 
           below: {
-            description: 'alert if number of hosts below specified thresholds',
+            description: 'Alert if number of hosts is below specified thresholds',
             short: '-b',
             long: '--below'
           }

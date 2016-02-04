@@ -3,9 +3,9 @@
 #   check-stats
 #
 # DESCRIPTION:
-#   Checks metrics in graphite, averaged over a period of time.
+#   Checks metrics in Graphite, averaged over a period of time.
 #
-#   The fired sensu event will only be critical if a stat is
+#   The fired Sensu event will only be critical if a stat is
 #   above the critical threshold. Otherwise, the event will be warning,
 #   if a stat is above the warning threshold.
 #
@@ -40,7 +40,7 @@ class CheckGraphiteStat < Sensu::Plugin::Check::CLI
   option :host,
          short: '-h HOST',
          long: '--host HOST',
-         description: 'graphite hostname',
+         description: 'Graphite hostname',
          proc: proc(&:to_s),
          default: 'graphite'
 
@@ -54,7 +54,7 @@ class CheckGraphiteStat < Sensu::Plugin::Check::CLI
   option :target,
          short: '-t TARGET',
          long: '--target TARGET',
-         description: 'The graphite metric name. Can include * to query multiple metrics',
+         description: 'The Graphite metric name. Can include * to query multiple metrics',
          proc: proc(&:to_s),
          required: true
 
@@ -66,7 +66,7 @@ class CheckGraphiteStat < Sensu::Plugin::Check::CLI
          required: false
 
   option :crit,
-         short: '-c Crit',
+         short: '-c CRIT',
          long: '--crit CRIT',
          description: 'Critical level',
          proc: proc(&:to_f),
@@ -75,14 +75,14 @@ class CheckGraphiteStat < Sensu::Plugin::Check::CLI
   option :unknown_ignore,
          short: '-u',
          long: '--unknown-ignore',
-         description: "Do nothing for UNKNOWN status (when you wildcard-match a ton of metrics at once and you don't care for a few missing data)",
+         description: "Do nothing for UNKNOWN status (when you wildcard-match a ton of metrics at once and you don't care about a few missing data)",
          boolean: true,
          default: false
 
   option :reverse_scale,
          short: '-r',
          long: '--reverse-scale',
-         description: 'Reverse the warning/crit scale (if value is less than instead of greater than)',
+         description: 'Reverse the warn/crit scale (if value is less than instead of greater than)',
          boolean: true,
          default: false
 
@@ -125,7 +125,7 @@ class CheckGraphiteStat < Sensu::Plugin::Check::CLI
         res = Net::HTTP.get_response(uri)
         res.body
       rescue => e
-        warning "Failed to query graphite: #{e.inspect}"
+        warning "Failed to query Graphite: #{e.inspect}"
       end
 
     status = 0
@@ -137,7 +137,7 @@ class CheckGraphiteStat < Sensu::Plugin::Check::CLI
         []
       end
 
-    unknown 'No data from graphite' if data.empty?
+    unknown 'No data from Graphite' if data.empty?
 
     data.each do |metric|
       s, msg = danger(metric)
