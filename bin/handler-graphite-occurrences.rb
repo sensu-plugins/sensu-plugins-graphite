@@ -18,8 +18,8 @@ class GraphiteOccurrences < Sensu::Handler
     value = @event['action'] == 'create' ? @event['occurrences'] : 0
     now = Time.now.to_i
 
-    # Get graphite-like format for sensu events here
-    check_occurences = "sensu.#{hostname}.#{check_name} #{value} #{now}"
+    # Get Graphite-like format for Sensu events here
+    check_occurrences = "sensu.#{hostname}.#{check_name} #{value} #{now}"
 
     graphite_server = settings['graphite']['server']
     graphite_port = settings['graphite']['port']
@@ -27,13 +27,13 @@ class GraphiteOccurrences < Sensu::Handler
     begin
       timeout(3) do
         sock = TCPSocket.new(graphite_server, graphite_port)
-        sock.puts check_occurences
+        sock.puts check_occurrences
         sock.close
       end
     rescue Timeout::Error
-      puts 'graphite -- timed out while sending check occurrence'
+      puts 'Graphite -- timed out while sending check occurrence'
     rescue => error
-      puts "graphite -- failed to send check occurrence: #{error}"
+      puts "Graphite -- failed to send check occurrence: #{error}"
     end
   end
 end
