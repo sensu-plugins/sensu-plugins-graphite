@@ -2,7 +2,7 @@
 #
 # Sensu - Graphite Event Handler
 #
-# This handler takes events and POSTs them to a graphite events URI.
+# This handler takes events and POSTs them to a Graphite events URI.
 #
 # For configuration see: graphite_event.json
 #
@@ -73,6 +73,6 @@ class GraphiteEvent < Sensu::Handler
       bail "failed to send event to #{uri}: #{e}"
     end
 
-    puts "sent event to graphite: #{body.to_json}"
+    puts "sent event to Graphite: #{body.to_json}"
   end
 end

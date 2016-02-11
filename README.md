@@ -35,7 +35,7 @@
 }
 ```
 
-**handler-graphite-occurances**
+**handler-graphite-occurrences**
 ```
 {
  "graphite": {

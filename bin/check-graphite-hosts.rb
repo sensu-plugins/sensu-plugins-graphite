@@ -3,7 +3,7 @@
 #   check-graphite-hosts
 #
 # DESCRIPTION:
-#   This plugin checks the number of hosts within graphite that are sending
+#   This plugin checks the number of hosts within Graphite that are sending
 #   data, and alerts if it is below a given threshold
 #
 # OUTPUT:
@@ -49,7 +49,7 @@ class CheckGraphiteHosts < Sensu::Plugin::Check::CLI
       results = proxy.retrieve_data!
 
       check(:critical, results) || check(:warning, results)
-      ok("#{name} value (#{hosts_with_data(results)}) okay")
+      ok("#{name} value (#{hosts_with_data(results)}) OK")
     rescue SensuPluginsGraphite::GraphiteProxy::ProxyError => e
       unknown e.message
     end
