@@ -149,11 +149,11 @@ class CheckGraphiteReplication < Sensu::Plugin::Check::CLI
 
     time_out('resolving DNS') do
       relays.each do |r|
-        if IPAddress.valid? r
-          relay_ips[r] = [r]
-        else
-          relay_ips[r] = Resolv.getaddresses(r)
-        end
+        relay_ips[r] = if IPAddress.valid? r
+                         [r]
+                       else
+                         Resolv.getaddresses(r)
+                       end
       end
     end
 
@@ -210,7 +210,7 @@ class CheckGraphiteReplication < Sensu::Plugin::Check::CLI
   end
 
   def graphite_key(key)
-    key.gsub(',', '_').gsub(' ', '_').gsub('.', '_').gsub('-', '_')
+    key.tr(',', '_').tr(' ', '_').tr('.', '_').tr('-', '_')
   end
 
   def time_out(activity, &block)

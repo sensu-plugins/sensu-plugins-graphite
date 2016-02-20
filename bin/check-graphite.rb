@@ -347,7 +347,7 @@ class Graphite < Sensu::Plugin::Check::CLI
           when 'fatal'
             fatal << text
           else
-            fail "Unknown type #{type}"
+            raise "Unknown type #{type}"
           end
           break if config[:short_output]
         end
@@ -384,7 +384,7 @@ class Graphite < Sensu::Plugin::Check::CLI
           when 'fatal'
             fatal << text
           else
-            fail "Unknown type #{type}"
+            raise "Unknown type #{type}"
           end
           break if config[:short_output]
         end
@@ -424,7 +424,7 @@ class Graphite < Sensu::Plugin::Check::CLI
           when 'fatal'
             fatal << text
           else
-            fail "Unknown type #{type}"
+            raise "Unknown type #{type}"
           end
           break if config[:short_output]
         end
@@ -459,7 +459,7 @@ class Graphite < Sensu::Plugin::Check::CLI
             when 'fatal'
               fatal << text
             else
-              fail "Unknown type #{type}"
+              raise "Unknown type #{type}"
             end
             break if config[:short_output]
           end
@@ -522,11 +522,11 @@ class Graphite < Sensu::Plugin::Check::CLI
       criticals_string = criticals_string + "\nGraphite WARNING: " + warnings_string if warnings.size > 0
       critical fatals_string if fatals.size > 0
       critical criticals_string if critical_errors.size > 0
-      warning warnings_string if warnings.size > 0
+      warning warnings_string if warnings.size > 0 # rubocop:disable Style/IdenticalConditionalBranches
     else
       critical fatals_string if fatals.size > 0
       critical criticals_string if critical_errors.size > 0
-      warning warnings_string if warnings.size > 0
+      warning warnings_string if warnings.size > 0 # rubocop:disable Style/IdenticalConditionalBranches
     end
     ok
   end

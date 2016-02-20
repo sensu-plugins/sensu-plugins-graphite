@@ -106,7 +106,7 @@ class CheckGraphiteStat < Sensu::Plugin::Check::CLI
           return [1, "#{metric['target']} is #{avg}"]
         end
       else
-        if !config[:crit].nil? && avg < config[:crit]
+        if !config[:crit].nil? && avg < config[:crit] # rubocop:disable Style/IfInsideElse
           return [2, "#{metric['target']} is #{avg}"]
         elsif !config[:warn].nil? && avg < config[:warn]
           return [1, "#{metric['target']} is #{avg}"]
