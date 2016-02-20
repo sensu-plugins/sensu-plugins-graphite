@@ -34,3 +34,6 @@ Style/Next:
 
 Style/GuardClause:
   Enabled: false
+
+Style/ZeroLengthPredicate:
+  Enabled: false

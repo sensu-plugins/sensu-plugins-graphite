@@ -92,6 +92,6 @@ class CheckGraphiteHosts < Sensu::Plugin::Check::CLI
 
   # Check is value is above defined threshold
   def above?(type, val)
-    (!config[:below]) && (val > config[type])
+    !config[:below] && (val > config[type])
   end
 end

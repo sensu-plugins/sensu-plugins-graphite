@@ -1,19 +1,33 @@
 language: ruby
 cache:
-  - bundler
+- bundler
 install:
-  - bundle install
+- bundle install
 rvm:
-  - 1.9.3
-  - 2.0
-  - 2.1
-  - 2.2
+- 1.9.3
+- 2.0
+- 2.1
+- 2.2
 notifications:
   email:
     recipients:
-      - sensu-plugin@sensu-plugins.io
+    - sensu-plugin@sensu-plugins.io
     on_success: change
     on_failure: always
-
 script:
-  - 'bundle exec rake default'
+- bundle exec rake default
+- gem build sensu-plugins-graphite.gemspec
+- gem install sensu-plugins-graphite-*.gem
+deploy:
+  provider: rubygems
+  api_key:
+    secure: NkXMq/TEpOYCvR1dHjQga9eQJCEvGdrlZF4q/zL1+6p8TbRHX3knXhMrVBrwDPObAWKb29DEgFdKpLUznUFw+QxXKKMJYPAjenQAjPBt9VT5QjBbp1SNQu0oIXdHAVl1thkjkap2DVebQ7yyZ2Kcl8GQutk6x55KlAlgQ68WMsE=
+  gem: sensu-plugins-graphite
+  on:
+    tags: true
+    all_branches: true
+    rvm: 1.9.3
+    rvm: 2.0
+    rvm: 2.1
+    rvm: 2.2
+    repo: sensu-plugins/sensu-plugins-graphite
