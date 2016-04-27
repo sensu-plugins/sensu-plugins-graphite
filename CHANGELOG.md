@@ -4,7 +4,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachangelog.com/)
 
 ## [Unreleased]
-- nothing
+### Fixed
+- fix comparison of number against array in --last.
+- improve wording of --last help text.
 
 ## [1.0.0] - 2016-01-20
 ### Changed
