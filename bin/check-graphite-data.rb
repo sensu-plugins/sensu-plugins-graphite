@@ -130,8 +130,10 @@ class CheckGraphiteData < Sensu::Plugin::Check::CLI
           end
           output
         end
+      rescue SocketError
+        unknown 'Failed to connect to graphite server'
       rescue OpenURI::HTTPError
-        unknown 'Failed to connect to Graphite server'
+        unknown 'Server error or invalid graphite expression'
       rescue NoMethodError
         unknown 'No data for time period and/or target'
       rescue Errno::ECONNREFUSED
