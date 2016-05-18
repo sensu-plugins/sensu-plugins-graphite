@@ -3,7 +3,7 @@
 #   check-replication
 #
 # DESCRIPTION:
-#   Check to ensure data gets posted and is retrievable by graphite.
+#   Check to ensure data gets posted and is retrievable by Graphite.
 #   We post to each server in config[:relays] then sleep config[:sleep]
 #   seconds then check each of config[:graphites] to see if the data made it
 #   to each one. OK if all servers have the data we expected, WARN if
@@ -11,10 +11,10 @@
 #   or fewer have it. config[:check_id] allows you to have many of these
 #   checks running in different places without any conflicts. Customize it
 #   if you are going to run this check from multiple servers. Otherwise
-#   it defaults to default. (can be a descriptive string, used as a graphite key)
+#   it defaults to default. (can be a descriptive string, used as a Graphite key)
 #
 #   This check is most useful when you have a cluster of carbon-relays configured
-#   with REPLICATION_FACTOR > 1 and more than one graphite server those
+#   with REPLICATION_FACTOR > 1 and more than one Graphite server those
 #   carbon-relays are configured to post to. This check ensures that replication
 #   is actually happening in a timely manner.
 
@@ -56,12 +56,12 @@ class CheckGraphiteReplication < Sensu::Plugin::Check::CLI
   option :relays,
          short: '-r RELAYS',
          long: '--relays RELAYS',
-         description: 'Comma separated list of carbon relay servers to post to.',
+         description: 'Comma separated list of Carbon relay servers to post to.',
          required: true
   option :servers,
          short: '-g SERVERS',
          long: '--graphite SERVERS',
-         description: 'Comma separated list of all graphite servers to check.',
+         description: 'Comma separated list of all Graphite servers to check.',
          required: true
   option :sleep,
          short: '-s SECONDS',
@@ -147,13 +147,13 @@ class CheckGraphiteReplication < Sensu::Plugin::Check::CLI
 
     relay_ips = {}
 
-    time_out('resolving dns') do
+    time_out('resolving DNS') do
       relays.each do |r|
-        if IPAddress.valid? r
-          relay_ips[r] = [r]
-        else
-          relay_ips[r] = Resolv.getaddresses(r)
-        end
+        relay_ips[r] = if IPAddress.valid? r
+                         [r]
+                       else
+                         Resolv.getaddresses(r)
+                       end
       end
     end
 
@@ -190,7 +190,7 @@ class CheckGraphiteReplication < Sensu::Plugin::Check::CLI
     graphite_data = nil
 
     begin
-      time_out("querying graphite api on #{server}") do
+      time_out("querying Graphite API on #{server}") do
         graphite_data = RestClient.get url
         graphite_data = JSON.parse(graphite_data)
       end
@@ -210,7 +210,7 @@ class CheckGraphiteReplication < Sensu::Plugin::Check::CLI
   end
 
   def graphite_key(key)
-    key.gsub(',', '_').gsub(' ', '_').gsub('.', '_').gsub('-', '_')
+    key.tr(',', '_').tr(' ', '_').tr('.', '_').tr('-', '_')
   end
 
   def time_out(activity, &block)

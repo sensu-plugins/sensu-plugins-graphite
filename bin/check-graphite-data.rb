@@ -65,7 +65,7 @@ class CheckGraphiteData < Sensu::Plugin::Check::CLI
         check_age || check(:critical) || check(:warning)
       end
 
-      ok("#{name} value okay")
+      ok("#{name} value OK")
     rescue SensuPluginsGraphite::GraphiteProxy::ProxyError => e
       unknown e.message
     end
@@ -114,7 +114,7 @@ class CheckGraphiteData < Sensu::Plugin::Check::CLI
 
         @raw_data = handle.gets
         if @raw_data == '[]'
-          unknown 'Empty data received from Graphite - metric probably doesn\'t exists'
+          unknown 'Empty data received from Graphite - metric probably doesn\'t exist'
         else
           @json_data = JSON.parse(@raw_data)
           output = {}
@@ -130,18 +130,20 @@ class CheckGraphiteData < Sensu::Plugin::Check::CLI
           end
           output
         end
-      rescue OpenURI::HTTPError
+      rescue SocketError
         unknown 'Failed to connect to graphite server'
+      rescue OpenURI::HTTPError
+        unknown 'Server error or invalid graphite expression'
       rescue NoMethodError
         unknown 'No data for time period and/or target'
       rescue Errno::ECONNREFUSED
-        unknown 'Connection refused when connecting to graphite server'
+        unknown 'Connection refused when connecting to Graphite server'
       rescue Errno::ECONNRESET
-        unknown 'Connection reset by peer when connecting to graphite server'
+        unknown 'Connection reset by peer when connecting to Graphite server'
       rescue EOFError
-        unknown 'End of file error when reading from graphite server'
+        unknown 'End of file error when reading from Graphite server'
       rescue => e
-        unknown "An unknown error occured: #{e.inspect}"
+        unknown "An unknown error occurred: #{e.inspect}"
       end
     end
   end
@@ -161,7 +163,7 @@ class CheckGraphiteData < Sensu::Plugin::Check::CLI
 
   # Check is value is above defined threshold
   def above?(type)
-    (!config[:below]) && (@data.last > config[type]) && (!decreased?)
+    !config[:below] && (@data.last > config[type]) && !decreased?
   end
 
   # Check if values have decreased within interval if given

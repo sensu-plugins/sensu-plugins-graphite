@@ -347,7 +347,7 @@ class Graphite < Sensu::Plugin::Check::CLI
           when 'fatal'
             fatal << text
           else
-            fail "Unknown type #{type}"
+            raise "Unknown type #{type}"
           end
           break if config[:short_output]
         end
@@ -384,7 +384,7 @@ class Graphite < Sensu::Plugin::Check::CLI
           when 'fatal'
             fatal << text
           else
-            fail "Unknown type #{type}"
+            raise "Unknown type #{type}"
           end
           break if config[:short_output]
         end
@@ -424,7 +424,7 @@ class Graphite < Sensu::Plugin::Check::CLI
           when 'fatal'
             fatal << text
           else
-            fail "Unknown type #{type}"
+            raise "Unknown type #{type}"
           end
           break if config[:short_output]
         end
@@ -434,14 +434,13 @@ class Graphite < Sensu::Plugin::Check::CLI
   end
 
   def check_last(target, max_values)
-    last_targets = last_graphite_metric target
+    last_targets = last_graphite_value target
     return [[], [], []] unless last_targets
     warnings = []
     criticals = []
     fatal = []
     # #YELLOW
-    last_targets.each do |target_name, last|
-      last_value = last.first
+    last_targets.each do |target_name, last_value|
       unless last_value.nil?
         # #YELLOW
         %w(fatal error warning).each do |type|
@@ -450,7 +449,7 @@ class Graphite < Sensu::Plugin::Check::CLI
           var1 = config[:greater_than] ? last_value : max_value.to_f
           var2 = config[:greater_than] ? max_value.to_f : last_value
           if var1 > var2
-            text = "The metric #{target_name} is #{last_value} that is #{greater_less} than max allowed #{max_value}"
+            text = "The metric #{target_name} is #{last_value} that is #{greater_less} than last allowed #{max_value}"
             case type
             when 'warning'
               warnings << text
@@ -459,7 +458,7 @@ class Graphite < Sensu::Plugin::Check::CLI
             when 'fatal'
               fatal << text
             else
-              fail "Unknown type #{type}"
+              raise "Unknown type #{type}"
             end
             break if config[:short_output]
           end
@@ -522,11 +521,11 @@ class Graphite < Sensu::Plugin::Check::CLI
       criticals_string = criticals_string + "\nGraphite WARNING: " + warnings_string if warnings.size > 0
       critical fatals_string if fatals.size > 0
       critical criticals_string if critical_errors.size > 0
-      warning warnings_string if warnings.size > 0
+      warning warnings_string if warnings.size > 0 # rubocop:disable Style/IdenticalConditionalBranches
     else
       critical fatals_string if fatals.size > 0
       critical criticals_string if critical_errors.size > 0
-      warning warnings_string if warnings.size > 0
+      warning warnings_string if warnings.size > 0 # rubocop:disable Style/IdenticalConditionalBranches
     end
     ok
   end

@@ -3,7 +3,7 @@
 # Released under the same terms as Sensu (the MIT license); see LICENSE
 # for details
 #
-# This will send a 1 to a graphite metric when an event is created and 0 when it's resolved
+# This will send a 1 to a Graphite metric when an event is created and 0 when it's resolved
 # See http://imansson.wordpress.com/2012/11/26/why-sensu-is-a-monitoring-router-some-cool-handlers/
 
 require 'sensu-handler'
@@ -15,7 +15,7 @@ class Resolve < Sensu::Handler
     graphite = Graphite.new(host: settings['graphite_notify']['host'], port: port)
     return unless graphite
     prop = @event['action'] == 'create' ? 1 : 0
-    message = "#{settings['graphite_notify']['prefix']}.#{@event['client']['name'].gsub('.', '_')}.#{@event['check']['name']}"
+    message = "#{settings['graphite_notify']['prefix']}.#{@event['client']['name'].tr('.', '_')}.#{@event['check']['name']}"
     message += " #{prop} #{graphite.time_now + rand(100)}"
     begin
       graphite.push_to_graphite do |graphite_socket|
