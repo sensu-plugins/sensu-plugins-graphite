@@ -4,6 +4,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachangelog.com/)
 
 ## [Unreleased]
+### Added
+- Added handler-graphite-status.rb to create metric which gives the status of the sensu check when it changes state (0,1,2,3)
+
 ### Fixed
 - Correct error message for incorrect graphite expression
 
