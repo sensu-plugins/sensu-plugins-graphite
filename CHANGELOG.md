@@ -4,8 +4,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachangelog.com/)
 
 ## [Unreleased]
-### Changed
-- modified handler-graphite-notify.rb to post check status to a graphite metric
+- nothing
 
 ## [0.0.7] - 2015-09-29
 ### Added
