@@ -17,6 +17,7 @@
  * bin/handler-graphite-event
  * bin/handler-graphite-notify
  * bin/handler-graphite-occurances
+ * bin/handler-graphite-status
  * bin/mutator-graphite
 
 ## Usage

@@ -5,24 +5,35 @@
 #
 # This will send a 1 to a Graphite metric when an event is created and 0 when it's resolved
 # See http://imansson.wordpress.com/2012/11/26/why-sensu-is-a-monitoring-router-some-cool-handlers/
+#
+# Config file by default is graphite_notify.json, but can be called with a specific config file
+# using the -j option. This allows multiple graphite handlers to be configured.
 
 require 'sensu-handler'
 require 'simple-graphite'
 
 class Resolve < Sensu::Handler
+  option :json_config,
+         description: 'Config Name',
+         short: '-j JsonConfig',
+         long: '--json_config JsonConfig',
+         required: false,
+         default: 'graphite_notify'
+
   def handle
-    port = settings['graphite_notify']['port'] ? settings['graphite_notify']['port'].to_s : '2003'
-    graphite = Graphite.new(host: settings['graphite_notify']['host'], port: port)
+    json_config = config[:json_config]
+    port = settings[json_config]['port'] ? settings[json_config]['port'].to_s : '2003'
+    graphite = Graphite.new(host: settings[json_config]['host'], port: port)
     return unless graphite
     prop = @event['action'] == 'create' ? 1 : 0
-    message = "#{settings['graphite_notify']['prefix']}.#{@event['client']['name'].tr('.', '_')}.#{@event['check']['name']}"
+    message = "#{settings[json_config]['prefix']}.#{@event['client']['name'].tr('.', '_')}.#{@event['check']['name']}"
     message += " #{prop} #{graphite.time_now + rand(100)}"
     begin
       graphite.push_to_graphite do |graphite_socket|
         graphite_socket.puts message
       end
     rescue ETIMEDOUT
-      error_msg = "Can't connect to #{settings['graphite_notify']['host']}:#{port} and send message #{message}'"
+      error_msg = "Can't connect to #{settings[json_config]['host']}:#{port} and send message #{message}'"
       raise error_msg
     end
   end
