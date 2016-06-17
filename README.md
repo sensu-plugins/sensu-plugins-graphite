@@ -50,7 +50,8 @@
 {
  "graphite_notify": {
     "host":"graphite.example.com",
-    "port":"2003"
+    "port":"2003",
+    "prefix":"sensu.events"
  }
 }
 ```
@@ -60,7 +61,8 @@
 {
  "graphite_status": {
     "host":"graphite.example.com",
-    "port":"2003"
+    "port":"2003",
+    "prefix":"sensu.events"
  }
 }
 ```
