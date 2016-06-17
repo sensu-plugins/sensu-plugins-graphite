@@ -7,6 +7,9 @@ This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachang
 ### Added
 - Added handler-graphite-status.rb to create metric which gives the status of the sensu check when it changes state (0,1,2,3)
 
+### Changed
+- Updated sensu-plugin dependency to use a pessimistic version constraint
+
 ### Fixed
 - Correct error message for incorrect graphite expression
 
