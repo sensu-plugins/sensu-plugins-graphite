@@ -44,6 +44,26 @@
 }
 ```
 
+**handler-graphite-notify**
+```
+{
+ "graphite_notify": {
+    "host":"graphite.example.com",
+    "port":"2003"
+ }
+}
+```
+
+**handler-graphite-status**
+```
+{
+ "graphite_notify": {
+    "host":"graphite.example.com",
+    "port":"2003"
+ }
+}
+```
+
 ## Installation
 
 [Installation and Setup](http://sensu-plugins.io/docs/installation_instructions.html)
