@@ -5,7 +5,7 @@
 #
 # This will send the check status (0,1,2,3) to a graphite metric when a check event state changes
 # Based on handler-graphite-notify.rb.
-# Config file by default is graphite_status.json, but can be called with a specific config file
+# Config by default is graphite_status but can be called with a specific json config
 # using the -j option. This allows multiple graphite handlers to be configured.
 
 require 'sensu-handler'

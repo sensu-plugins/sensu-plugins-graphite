@@ -6,7 +6,7 @@
 # This will send a 1 to a Graphite metric when an event is created and 0 when it's resolved
 # See http://imansson.wordpress.com/2012/11/26/why-sensu-is-a-monitoring-router-some-cool-handlers/
 #
-# Config file by default is graphite_notify.json, but can be called with a specific config file
+# Config by default is graphite_notify, but can be called with a specific json config
 # using the -j option. This allows multiple graphite handlers to be configured.
 
 require 'sensu-handler'

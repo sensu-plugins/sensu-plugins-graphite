@@ -8,7 +8,7 @@ This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachang
 - Added handler-graphite-status.rb to create metric which gives the status of the sensu check when it changes state (0,1,2,3)
 
 ### Changed
-- Added option -j to handler-graphite-notify.rb to allow configuration file to be defined on command line. This matches the 
+- Added option -j to handler-graphite-notify.rb to allow configuration scope to be defined on command line. This matches the 
   config in handler-graphite-status.rb
 - Updated sensu-plugin dependency to use a pessimistic version constraint
 
