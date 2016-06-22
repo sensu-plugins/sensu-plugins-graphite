@@ -17,6 +17,7 @@
  * bin/handler-graphite-event
  * bin/handler-graphite-notify
  * bin/handler-graphite-occurances
+ * bin/handler-graphite-status
  * bin/mutator-graphite
 
 ## Usage
@@ -58,7 +59,7 @@
 **handler-graphite-status**
 ```
 {
- "graphite_notify": {
+ "graphite_status": {
     "host":"graphite.example.com",
     "port":"2003",
     "prefix":"sensu.events"
