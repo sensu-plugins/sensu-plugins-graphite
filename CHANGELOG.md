@@ -5,8 +5,7 @@ This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachang
 
 ## [Unreleased]
 ### Changed
-- Added option -j to handler-graphite-notify.rb and handler-graphite-status.rb to allow configuration scope to be defined on 
-  command line.
+- Added option -j to handler-graphite-notify.rb and handler-graphite-status.rb to allow configuration scope to be defined on command line.
 
 ## [2.0.0] - 2016-06-21
 ### Added
