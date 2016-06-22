@@ -4,12 +4,15 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachangelog.com/)
 
 ## [Unreleased]
+### Changed
+- Added option -j to handler-graphite-notify.rb and handler-graphite-status.rb to allow configuration scope to be defined on 
+  command line.
+
+## [2.0.0] - 2016-06-21
 ### Added
 - Added handler-graphite-status.rb to create metric which gives the status of the sensu check when it changes state (0,1,2,3)
 
 ### Changed
-- Added option -j to handler-graphite-notify.rb to allow configuration scope to be defined on command line. This matches the 
-  config in handler-graphite-status.rb
 - Updated sensu-plugin dependency to use a pessimistic version constraint
 
 ### Fixed
@@ -62,7 +65,8 @@ This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachang
 ### Added
 - initial release
 
-[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-graphite/compare/1.1.0...HEAD
+[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-graphite/compare/2.0.0...HEAD
+[2.0.0]: https://github.com/sensu-plugins/sensu-plugins-graphite/compare/1.1.0...2.0.0
 [1.1.0]: https://github.com/sensu-plugins/sensu-plugins-graphite/compare/1.0.0...1.1.0
 [1.0.0]: https://github.com/sensu-plugins/sensu-plugins-graphite/compare/0.0.7...1.0.0
 [0.0.7]: https://github.com/sensu-plugins/sensu-plugins-graphite/compare/0.0.6...0.0.7
