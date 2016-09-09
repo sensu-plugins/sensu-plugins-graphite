@@ -11,6 +11,9 @@ require 'sensu-handler'
 require 'simple-graphite'
 
 class Resolve < Sensu::Handler
+  # override filters from Sensu::Handler. not appropriate for metric handlers
+  def filter; end
+
   def handle
     port = settings['graphite_notify']['port'] ? settings['graphite_notify']['port'].to_s : '2003'
     graphite = Graphite.new(host: settings['graphite_notify']['host'], port: port)
@@ -22,8 +25,8 @@ class Resolve < Sensu::Handler
       graphite.push_to_graphite do |graphite_socket|
         graphite_socket.puts message
       end
-    rescue ETIMEDOUT
-      error_msg = "Can't connect to #{settings['graphite_notify']['host']}:#{port} and send message #{message}'"
+    rescue => e
+      error_msg = "Can't connect to #{settings['graphite_notify']['host']}:#{port} and send message #{message}: #{e}'"
       raise error_msg
     end
   end
