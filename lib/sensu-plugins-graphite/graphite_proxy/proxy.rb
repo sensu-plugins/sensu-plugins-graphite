@@ -3,10 +3,7 @@ require 'open-uri'
 module SensuPluginsGraphite
   module GraphiteProxy
     class ProxyError < StandardError
-      attr_accessor :exception
-
-      def initialize(msg, args)
-        self.exception = args[:exception]
+      def initialize(msg)
         super msg
       end
     end
@@ -65,7 +62,6 @@ module SensuPluginsGraphite
 
       def output_line(raw)
         raw['datapoints'].delete_if { |v| v.first.nil? }
-        unknown 'No data for time period and/or target' if raw['datapoints'].empty?
         target = raw['target']
         data = raw['datapoints'].map(&:first)
         start = raw['datapoints'].first.last
@@ -88,24 +84,20 @@ module SensuPluginsGraphite
             handle = open(url, request_auth_options(config))
 
             @raw_data = handle.gets
-            if @raw_data == '[]'
-              unknown 'Empty data received from Graphite - metric probably doesn\'t exists'
-            else
-              json_data = JSON.parse(@raw_data)
-              format_output(json_data)
-            end
-          rescue OpenURI::HTTPError => e
-            raise ProxyError.new('Failed to connect to Graphite server', exception: e)
-          rescue NoMethodError => e
-            raise ProxyError.new('No data for time period and/or target', exception: e)
-          rescue Errno::ECONNREFUSED => e
-            raise ProxyError.new('Connection refused when connecting to Graphite server', exception: e)
-          rescue Errno::ECONNRESET => e
-            raise ProxyError.new('Connection reset by peer when connecting to Graphite server', exception: e)
-          rescue EOFError => e
-            raise ProxyError.new('End of file error when reading from Graphite server', exception: e)
-          rescue => e
-            raise ProxyError.new("An unknown error occurred: #{e.inspect}", exception: e)
+            json_data = JSON.parse(@raw_data)
+            format_output(json_data)
+            rescue OpenURI::HTTPError => e
+              raise ProxyError.new('Failed to connect to Graphite server')
+            rescue NoMethodError, JSON::ParserError => e
+              raise ProxyError.new('No data for time period and/or target')
+            rescue Errno::ECONNREFUSED => e
+              raise ProxyError.new('Connection refused when connecting to Graphite server')
+            rescue Errno::ECONNRESET => e
+              raise ProxyError.new('Connection reset by peer when connecting to Graphite server')
+            rescue EOFError => e
+              raise ProxyError.new('End of file error when reading from Graphite server')
+            rescue => e
+              raise ProxyError.new("An unknown error occurred: #{e.inspect}")
           end
         end
       end
