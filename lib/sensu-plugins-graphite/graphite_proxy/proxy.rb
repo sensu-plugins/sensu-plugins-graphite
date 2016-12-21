@@ -87,17 +87,17 @@ module SensuPluginsGraphite
             json_data = JSON.parse(@raw_data)
             format_output(json_data)
           rescue OpenURI::HTTPError
-            raise ProxyError.new('Failed to connect to Graphite server')
+            raise ProxyError, 'Failed to connect to Graphite server'
           rescue NoMethodError, JSON::ParserError
-            raise ProxyError.new('No data for time period and/or target')
+            raise ProxyError, 'No data for time period and/or target'
           rescue Errno::ECONNREFUSED
-            raise ProxyError.new('Connection refused when connecting to Graphite server')
+            raise ProxyError, 'Connection refused when connecting to Graphite server'
           rescue Errno::ECONNRESET
-            raise ProxyError.new('Connection reset by peer when connecting to Graphite server')
+            raise ProxyError, 'Connection reset by peer when connecting to Graphite server'
           rescue EOFError
-            raise ProxyError.new('End of file error when reading from Graphite server')
+            raise ProxyError, 'End of file error when reading from Graphite server'
           rescue => e
-            raise ProxyError.new("An unknown error occurred: #{e.inspect}")
+            raise ProxyError, "An unknown error occurred: #{e.inspect}"
           end
         end
       end
