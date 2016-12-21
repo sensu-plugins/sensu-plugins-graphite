@@ -65,6 +65,7 @@ module SensuPluginsGraphite
 
       def output_line(raw)
         raw['datapoints'].delete_if { |v| v.first.nil? }
+        unknown 'No data for time period and/or target' if raw['datapoints'].empty?
         target = raw['target']
         data = raw['datapoints'].map(&:first)
         start = raw['datapoints'].first.last
