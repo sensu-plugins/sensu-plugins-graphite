@@ -8,6 +8,7 @@ This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachang
 - Disable filtering for handler-graphite-status.rb
 ### Fixed
 - Error handling in graphite handlers
+- Duplicate short option in check-graphite.rb
 
 ## [2.0.0] - 2016-06-21
 ### Added
