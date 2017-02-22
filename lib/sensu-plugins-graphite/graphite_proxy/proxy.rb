@@ -64,10 +64,17 @@ module SensuPluginsGraphite
         raw['datapoints'].delete_if { |v| v.first.nil? }
         target = raw['target']
         data = raw['datapoints'].map(&:first)
-        start = raw['datapoints'].first.last
-        dend = raw['datapoints'].last.last
-        step = ((dend - start) / raw['datapoints'].size.to_f).ceil
-
+        if !raw['datapoints'].first.nil? && !raw['datapoints'].last.nil? && raw['datapoints'].size.to_f > 0
+          start = raw['datapoints'].first.last
+          dend = raw['datapoints'].last.last
+          rdpsize = raw['datapoints'].size.to_f
+          step = ((dend - start) / rdpsize).ceil # moved it here to avoid division by 0.
+        else
+          # Filling up some dummy variables
+          start = 0
+          dend = 0
+          step = 0
+        end
         { 'target' => target, 'data' => data, 'start' => start, 'end' => dend, 'step' => step }
       end
 
