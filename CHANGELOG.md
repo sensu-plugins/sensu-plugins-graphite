@@ -10,6 +10,8 @@ This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachang
 ### Fixed
 - Error handling in graphite handlers
 - Duplicate short option in check-graphite.rb
+### Removed
+- Method retrieve_data in check-graphite-data since it's duplicate from graphite_proxy
 
 ## [2.0.0] - 2016-06-21
 ### Added
