@@ -1,11 +1,11 @@
-#Change Log
+# Change Log
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachangelog.com/)
 
 ## [Unreleased]
 
-## [2.1.0]
+## [2.1.0] - 2017-06-11
 ### Changed
 - Disable filtering for handler-graphite-status.rb
 ### Fixed
