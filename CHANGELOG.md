@@ -4,7 +4,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachangelog.com/)
 
 ## [Unreleased]
-- Remove short options -s on hostname_sub, it was already taken
+### Fixed
+- Remove short options -s on hostname_sub, it was unusable. This affects check-graphite-data and check check-graphite-hosts
 
 ## [2.1.0] - 2017-06-11
 ### Changed
