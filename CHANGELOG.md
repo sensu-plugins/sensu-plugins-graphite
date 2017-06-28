@@ -4,6 +4,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachangelog.com/)
 
 ## [Unreleased]
+### Added
+- example in readme for using the handlers (@scosist)
 
 ## [2.2.1] - 2017-06-13
 ### Fixed
