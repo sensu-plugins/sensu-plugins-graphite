@@ -66,6 +66,58 @@
 }
 ```
 
+TCP handler (preferred)
+```
+{
+  "graphite_event": {
+    "server_uri": "https://graphite.example.com:443/events/",
+    "tags": [
+      "custom_tag_a",
+      "custom_tag_b"
+    ]
+  },
+  "handlers":
+  {
+    "default": {
+      "type": "set",
+      "handlers": [
+        "graphite_event"
+      ]
+    },
+    "graphite_tcp": {
+      "type": "tcp",
+      "socket": {
+        "host":"graphite.example.com",
+        "port":2003
+      },
+      "mutator": "only_check_output"
+    },
+    "graphite_event": {
+      "type": "pipe",
+      "filters": [
+        "custom_filter_a",
+        "custom_filter_b"
+      ],
+      "command": "handler-graphite-event.rb"
+    }
+  },
+  "checks": {
+    "metrics_uptime": {
+      "standalone": true,
+      "type": "metric",
+      "handlers": [
+        "graphite_tcp"
+      ],
+      "interval": 60,
+      "command": "metrics-uptime.rb --scheme sensu.host.$(hostname).uptime",
+      "subscribers": [
+        "core"
+      ]
+    }
+  }
+}
+```
+
 ## Installation
 
 [Installation and Setup](http://sensu-plugins.io/docs/installation_instructions.html)
