@@ -21,7 +21,7 @@
 
 ## Usage
 
-**handler-graphite-event**
+### handler-graphite-event
 ```
 {
   "graphite_event": {
@@ -34,7 +34,7 @@
 }
 ```
 
-**handler-graphite-occurrences**
+### handler-graphite-occurrences
 ```
 {
  "graphite": {
@@ -44,7 +44,7 @@
 }
 ```
 
-**handler-graphite-notify**
+### handler-graphite-notify
 ```
 {
  "graphite_notify": {
@@ -55,7 +55,7 @@
 }
 ```
 
-**handler-graphite-status**
+### handler-graphite-status
 ```
 {
  "graphite_status": {
@@ -66,7 +66,8 @@
 }
 ```
 
-TCP handler (preferred)
+## Full Configuration Example
++**Note that TCP Handler is preferred**
 ```
 {
   "graphite_event": {
