@@ -18,6 +18,8 @@ class Resolve < Sensu::Handler
          long: '--json_config JsonConfig',
          required: false,
          default: 'graphite_status'
+  # override filters from Sensu::Handler. not appropriate for metric handlers
+  def filter; end
 
   def handle
     json_config = config[:json_config]

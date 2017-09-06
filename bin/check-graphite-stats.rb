@@ -142,7 +142,7 @@ class CheckGraphiteStat < Sensu::Plugin::Check::CLI
     data.each do |metric|
       s, msg = danger(metric)
 
-      message += "#{msg} " unless s == 0
+      message += "#{msg} " unless s.zero?
       status = s unless s < status
     end
 

@@ -76,7 +76,6 @@ module SensuPluginsGraphite
 
           hostname_sub: {
             description: 'Character used to replace periods (.) in hostname (default: _)',
-            short: '-s CHARACTER',
             long: '--host-sub CHARACTER'
           },
 
