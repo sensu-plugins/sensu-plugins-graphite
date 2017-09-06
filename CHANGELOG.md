@@ -1,9 +1,26 @@
-#Change Log
+# Change Log
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachangelog.com/)
 
 ## [Unreleased]
+### Added
+- example in readme for using the handlers (@scosist)
+
+## [2.2.1] - 2017-06-13
+### Fixed
+- Remove short options -s on hostname_sub, it was unusable. This affects check-graphite-data and check check-graphite-hosts
+
+## [2.2.0] - 2017-06-11
+### Removed
+- check-graphite-data.rb: Removed unused method `retrieve_data` since it's duplicate from graphite_proxy
+
+## [2.1.0] - 2017-06-11
+### Changed
+- Disable filtering for handler-graphite-status.rb
+### Fixed
+- Error handling in graphite handlers
+- Duplicate short option in check-graphite.rb
 
 ## [2.0.0] - 2016-06-21
 ### Added
@@ -62,7 +79,10 @@ This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachang
 ### Added
 - initial release
 
-[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-graphite/compare/2.0.0...HEAD
+[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-graphite/compare/2.2.1...HEAD
+[2.2.1]: https://github.com/sensu-plugins/sensu-plugins-graphite/compare/2.2.0...2.2.1
+[2.2.0]: https://github.com/sensu-plugins/sensu-plugins-graphite/compare/2.1.0...2.2.0
+[2.1.0]: https://github.com/sensu-plugins/sensu-plugins-graphite/compare/2.0.0...2.1.0
 [2.0.0]: https://github.com/sensu-plugins/sensu-plugins-graphite/compare/1.1.0...2.0.0
 [1.1.0]: https://github.com/sensu-plugins/sensu-plugins-graphite/compare/1.0.0...1.1.0
 [1.0.0]: https://github.com/sensu-plugins/sensu-plugins-graphite/compare/0.0.7...1.0.0

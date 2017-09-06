@@ -67,14 +67,14 @@ class Graphite < Sensu::Plugin::Check::CLI
 
   option :acceptable_diff_percentage,
          description: 'The acceptable diff from max values in percentage, used in check_function_increasing',
-         short: '-d ACCEPTABLE_DIFF_PERCENTAGE',
+         short: '-D ACCEPTABLE_DIFF_PERCENTAGE',
          long: '--acceptable_diff_percentage ACCEPTABLE_DIFF_PERCENTAGE',
          default: 0
 
   option :check_function_increasing,
          description: 'Check that value is increasing or equal over time (use acceptable_diff_percentage if it should allow to be lower)',
          short: '-i',
-         long: '--check_function_decreasing',
+         long: '--check_function_increasing',
          default: false,
          boolean: true
 

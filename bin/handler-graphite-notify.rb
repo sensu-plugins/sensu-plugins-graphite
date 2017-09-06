@@ -21,8 +21,8 @@ class Resolve < Sensu::Handler
       graphite.push_to_graphite do |graphite_socket|
         graphite_socket.puts message
       end
-    rescue ETIMEDOUT
-      error_msg = "Can't connect to #{settings['graphite_notify']['host']}:#{port} and send message #{message}'"
+    rescue => e
+      error_msg = "Can't connect to #{settings['graphite_notify']['host']}:#{port} and send message #{message}: #{e}'"
       raise error_msg
     end
   end

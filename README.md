@@ -16,12 +16,12 @@
  * bin/extension-graphite
  * bin/handler-graphite-event
  * bin/handler-graphite-notify
- * bin/handler-graphite-occurances
+ * bin/handler-graphite-occurrences
  * bin/mutator-graphite
 
 ## Usage
 
-**handler-graphite-event**
+### handler-graphite-event
 ```
 {
   "graphite_event": {
@@ -34,7 +34,7 @@
 }
 ```
 
-**handler-graphite-occurrences**
+### handler-graphite-occurrences
 ```
 {
  "graphite": {
@@ -44,7 +44,7 @@
 }
 ```
 
-**handler-graphite-notify**
+### handler-graphite-notify
 ```
 {
  "graphite_notify": {
@@ -55,14 +55,67 @@
 }
 ```
 
-**handler-graphite-status**
+### handler-graphite-status
 ```
 {
- "graphite_notify": {
+ "graphite_status": {
     "host":"graphite.example.com",
     "port":"2003",
     "prefix":"sensu.events"
  }
+}
+```
+
+## Full Configuration Example
++**Note that TCP Handler is preferred**
+```
+{
+  "graphite_event": {
+    "server_uri": "https://graphite.example.com:443/events/",
+    "tags": [
+      "custom_tag_a",
+      "custom_tag_b"
+    ]
+  },
+  "handlers":
+  {
+    "default": {
+      "type": "set",
+      "handlers": [
+        "graphite_event"
+      ]
+    },
+    "graphite_tcp": {
+      "type": "tcp",
+      "socket": {
+        "host":"graphite.example.com",
+        "port":2003
+      },
+      "mutator": "only_check_output"
+    },
+    "graphite_event": {
+      "type": "pipe",
+      "filters": [
+        "custom_filter_a",
+        "custom_filter_b"
+      ],
+      "command": "handler-graphite-event.rb"
+    }
+  },
+  "checks": {
+    "metrics_uptime": {
+      "standalone": true,
+      "type": "metric",
+      "handlers": [
+        "graphite_tcp"
+      ],
+      "interval": 60,
+      "command": "metrics-uptime.rb --scheme sensu.host.$(hostname).uptime",
+      "subscribers": [
+        "core"
+      ]
+    }
+  }
 }
 ```
 
