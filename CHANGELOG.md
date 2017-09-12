@@ -6,6 +6,8 @@ This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachang
 ## [Unreleased]
 ### Added
 - example in readme for using the handlers (@scosist)
+### Changed
+- Added option -j to handler-graphite-notify.rb and handler-graphite-status.rb to allow configuration scope to be defined on command line.
 
 ## [2.2.1] - 2017-06-13
 ### Fixed
