@@ -4,6 +4,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachangelog.com/)
 
 ## [Unreleased]
+
+## [2.3.0] - 2017-10-19
 ### Added
 - example in readme for using the handlers (@scosist)
 ### Changed
@@ -82,6 +84,7 @@ This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachang
 - initial release
 
 [Unreleased]: https://github.com/sensu-plugins/sensu-plugins-graphite/compare/2.2.1...HEAD
+[2.3.0]: https://github.com/sensu-plugins/sensu-plugins-graphite/compare/2.2.1...2.3.0
 [2.2.1]: https://github.com/sensu-plugins/sensu-plugins-graphite/compare/2.2.0...2.2.1
 [2.2.0]: https://github.com/sensu-plugins/sensu-plugins-graphite/compare/2.1.0...2.2.0
 [2.1.0]: https://github.com/sensu-plugins/sensu-plugins-graphite/compare/2.0.0...2.1.0
