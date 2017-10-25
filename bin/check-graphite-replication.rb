@@ -17,7 +17,7 @@
 #   with REPLICATION_FACTOR > 1 and more than one Graphite server those
 #   carbon-relays are configured to post to. This check ensures that replication
 #   is actually happening in a timely manner.
-
+#
 #   How it works: We generate a large random number for each of these servers
 #   Then we post that number to each server via a key in the form of:
 #   checks.graphite.check_id.replication.your_graphite_server.ip It's safe
@@ -36,7 +36,18 @@
 #   gem: ipaddress
 #
 # USAGE:
-#   #YELLOW
+#   Basic check, expect metrics to land on these graphite servers
+#   check-graphite-replication.rb -r relay1 -g graphite1,graphite2
+#
+#   Make sure all 4 graphite instances get the metric
+#   check-graphite-replication.rb -r relay1 -g graphite1,graphite2,graphite3 graphite4 -c 1
+#
+#   Test multiple relay servers
+#   check-graphite-replication.rb -r relay1,relay2 -g graphite1,graphite2
+#
+#   Test from multiple locations (no conflicts)
+#   check-graphite-replication.rb -r relay1,relay2 -g graphite1,graphite2 -i check_1
+#   check-graphite-replication.rb -r relay1,relay2 -g graphite1,graphite2 -i check_2
 #
 # LICENSE:
 #   AJ Bourg <aj@ajbourg.com>
