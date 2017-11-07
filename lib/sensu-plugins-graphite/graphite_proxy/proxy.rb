@@ -79,7 +79,7 @@ module SensuPluginsGraphite
               config[:server].prepend('http://')
             end
 
-            url = "#{config[:server]}/render?format=json&target=#{formatted_target}&from=#{config[:from]}"
+            url = "#{config[:server]}/render?format=json&target=#{formatted_target}&from=#{config[:from]}&until=#{config[:until]}"
 
             handle = open(url, request_auth_options(config))
 
