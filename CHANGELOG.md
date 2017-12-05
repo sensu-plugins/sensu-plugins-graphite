@@ -4,8 +4,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachangelog.com/)
 
 ## [Unreleased]
-### Fixed
-- Updated the minimum version of sensu-plugin to v2.0
+### Breaking Change
+- bumped dependency of `sensu-plugin` to 2.x you can read about it [here](https://github.com/sensu-plugins/sensu-plugin/blob/master/CHANGELOG.md#v200---2017-03-29)
 
 ## [2.3.0] - 2017-10-19
 ### Added
