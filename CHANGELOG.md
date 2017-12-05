@@ -4,6 +4,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachangelog.com/)
 
 ## [Unreleased]
+
+## [3.0.0] - 2017-12-04
 ### Breaking Change
 - bumped dependency of `sensu-plugin` to 2.x you can read about it [here](https://github.com/sensu-plugins/sensu-plugin/blob/master/CHANGELOG.md#v200---2017-03-29)
 
@@ -85,7 +87,8 @@ This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachang
 ### Added
 - initial release
 
-[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-graphite/compare/2.2.1...HEAD
+[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-graphite/compare/3.0.0...HEAD
+[3.0.0]: https://github.com/sensu-plugins/sensu-plugins-graphite/compare/2.2.1...3.0.0
 [2.3.0]: https://github.com/sensu-plugins/sensu-plugins-graphite/compare/2.2.1...2.3.0
 [2.2.1]: https://github.com/sensu-plugins/sensu-plugins-graphite/compare/2.2.0...2.2.1
 [2.2.0]: https://github.com/sensu-plugins/sensu-plugins-graphite/compare/2.1.0...2.2.0
