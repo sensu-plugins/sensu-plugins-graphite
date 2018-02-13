@@ -60,7 +60,7 @@ class GraphiteEvent < Sensu::Handler
 
     body = {
       'what' => 'sensu_event',
-      'tags' => tags.join(','),
+      'tags' => [tags.join(',')],
       'data' => event_status,
       'when' => Time.now.to_i
     }
