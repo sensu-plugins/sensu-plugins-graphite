@@ -22,6 +22,14 @@ require 'uri'
 require 'json'
 
 class GraphiteEvent < Sensu::Handler
+
+  option :latest,
+         description: 'Latest - set for post 1.0 Graphite compatibility',
+         short: '-l',
+         boolean: true,
+         required: false,
+         default: false
+
   def post_event(uri, body)
     uri          = URI.parse(uri)
     req          = Net::HTTP::Post.new(uri.path)
@@ -60,7 +68,7 @@ class GraphiteEvent < Sensu::Handler
 
     body = {
       'what' => 'sensu_event',
-      'tags' => [tags.join(',')],
+      'tags' => config[:latest] ? [tags.join(',')] : tags.join(','),
       'data' => event_status,
       'when' => Time.now.to_i
     }
