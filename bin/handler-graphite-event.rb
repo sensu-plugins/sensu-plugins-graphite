@@ -25,7 +25,7 @@ class GraphiteEvent < Sensu::Handler
   option :tags_as_arrays,
          description: 'send tags as array - for post graphite 1.0 compatibility.',
          short: '-t',
-         long: '--tags-as-arrays',
+         long: '--tags-as-array',
          boolean: true,
          required: false,
          default: false
@@ -68,7 +68,7 @@ class GraphiteEvent < Sensu::Handler
 
     body = {
       'what' => 'sensu_event',
-      'tags' => config[:tags_as_arrays] ? [tags.join(',')] : tags.join(','),
+      'tags' => config[:tags_as_array] ? [tags.join(',')] : tags.join(','),
       'data' => event_status,
       'when' => Time.now.to_i
     }
