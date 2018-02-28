@@ -22,7 +22,7 @@ require 'uri'
 require 'json'
 
 class GraphiteEvent < Sensu::Handler
-  option :tags_as_arrays,
+  option :tags_as_array,
          description: 'send tags as array - for post graphite 1.0 compatibility.',
          short: '-t',
          long: '--tags-as-array',
