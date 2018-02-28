@@ -23,7 +23,7 @@ require 'json'
 
 class GraphiteEvent < Sensu::Handler
   option :tags_as_arrays,
-         description: 'send tags as array - for versions after 1.0 of graphite',
+         description: 'send tags as array - for graphite 1.0 or newer compatibility.',
          short: '-t',
          boolean: true,
          required: false,
