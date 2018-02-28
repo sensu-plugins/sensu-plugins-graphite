@@ -22,10 +22,9 @@ require 'uri'
 require 'json'
 
 class GraphiteEvent < Sensu::Handler
-
-  option :latest,
-         description: 'Latest - set for post 1.0 Graphite compatibility',
-         short: '-l',
+  option :tags_as_arrays,
+         description: 'send tags as array - for versions after 1.0 of graphite',
+         short: '-t',
          boolean: true,
          required: false,
          default: false
@@ -68,7 +67,7 @@ class GraphiteEvent < Sensu::Handler
 
     body = {
       'what' => 'sensu_event',
-      'tags' => config[:latest] ? [tags.join(',')] : tags.join(','),
+      'tags' => config[:tags_as_arrays] ? [tags.join(',')] : tags.join(','),
       'data' => event_status,
       'when' => Time.now.to_i
     }
