@@ -22,6 +22,14 @@ require 'uri'
 require 'json'
 
 class GraphiteEvent < Sensu::Handler
+  option :tags_as_array,
+         description: 'send tags as array - for post graphite 1.0 compatibility.',
+         short: '-t',
+         long: '--tags-as-array',
+         boolean: true,
+         required: false,
+         default: false
+
   def post_event(uri, body)
     uri          = URI.parse(uri)
     req          = Net::HTTP::Post.new(uri.path)
@@ -60,7 +68,7 @@ class GraphiteEvent < Sensu::Handler
 
     body = {
       'what' => 'sensu_event',
-      'tags' => tags.join(','),
+      'tags' => config[:tags_as_array] ? [tags.join(',')] : tags.join(','),
       'data' => event_status,
       'when' => Time.now.to_i
     }

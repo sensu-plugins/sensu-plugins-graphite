@@ -4,6 +4,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachangelog.com/)
 
 ## [Unreleased]
+### Added
+- Added -t flag to handler-graphite-event.rb to support post 1.0 versions of graphite which require tags sent as arrays.
 
 ## [3.0.0] - 2017-12-04
 ### Breaking Change
