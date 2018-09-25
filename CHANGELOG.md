@@ -14,6 +14,7 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 
 ### Fixed
 - minor typos in PR template (@majormoses)
+- handler-graphite-status.rb: use proper rescue class (@MrMisa93)
 
 ## [3.0.0] - 2017-12-04
 ### Breaking Change
