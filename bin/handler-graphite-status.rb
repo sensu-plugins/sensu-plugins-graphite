@@ -33,7 +33,7 @@ class Resolve < Sensu::Handler
       graphite.push_to_graphite do |graphite_socket|
         graphite_socket.puts message
       end
-    rescue ETIMEDOUT
+    rescue Errno::ETIMEDOUT
       error_msg = "Can't connect to #{settings[json_config]['host']}:#{port} and send message #{message}'"
       raise error_msg
     end
