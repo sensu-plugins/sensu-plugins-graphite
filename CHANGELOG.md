@@ -6,6 +6,7 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 ## [Unreleased]
 ### Fixed
 - handler-graphite-status.rb: use proper rescue class (@MrMisa93)
+- handler-graphite-notify.rb: use proper rescue class (@majormoses)
 
 ## [3.1.0] - 2018-02-28
 ### Added
