@@ -4,6 +4,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins/community/blob/master/HOW_WE_CHANGELOG.md)
 
 ## [Unreleased]
+
+## [3.1.1] - 2018-09-26
 ### Fixed
 - handler-graphite-status.rb: use proper rescue class (@MrMisa93)
 - handler-graphite-notify.rb: use proper rescue class (@majormoses)
@@ -100,7 +102,8 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 ### Added
 - initial release
 
-[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-graphite/compare/3.1.0...HEAD
+[Unreleased]: https://github.com/sensu-plugins/sensu-plugins-graphite/compare/3.1.1...HEAD
+[3.1.1]: https://github.com/sensu-plugins/sensu-plugins-graphite/compare/3.1.0...3.1.1
 [3.1.0]: https://github.com/sensu-plugins/sensu-plugins-graphite/compare/3.0.0...3.1.0
 [3.0.0]: https://github.com/sensu-plugins/sensu-plugins-graphite/compare/2.2.1...3.0.0
 [2.3.0]: https://github.com/sensu-plugins/sensu-plugins-graphite/compare/2.2.1...2.3.0
