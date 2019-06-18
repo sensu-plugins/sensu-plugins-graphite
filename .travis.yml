@@ -1,13 +1,11 @@
 language: ruby
 cache:
 - bundler
+before_install:
+- gem install bundler -v 2.0
 install:
 - bundle install
 rvm:
-- 2.0
-- 2.1
-- 2.2
-- 2.3.0
 - 2.4.1
 notifications:
   email:
@@ -19,17 +17,21 @@ script:
 - bundle exec rake default
 - gem build sensu-plugins-graphite.gemspec
 - gem install sensu-plugins-graphite-*.gem
+before_deploy:
+- bash -c "[ ! -d bonsai/ ] && git clone https://github.com/sensu/sensu-go-bonsai-asset.git bonsai || echo 'bonsai/ exists, skipping git clone'"
 deploy:
-  provider: rubygems
+- provider: rubygems
   api_key:
-    secure: NkXMq/TEpOYCvR1dHjQga9eQJCEvGdrlZF4q/zL1+6p8TbRHX3knXhMrVBrwDPObAWKb29DEgFdKpLUznUFw+QxXKKMJYPAjenQAjPBt9VT5QjBbp1SNQu0oIXdHAVl1thkjkap2DVebQ7yyZ2Kcl8GQutk6x55KlAlgQ68WMsE=
+    secure:  NkXMq/TEpOYCvR1dHjQga9eQJCEvGdrlZF4q/zL1+6p8TbRHX3knXhMrVBrwDPObAWKb29DEgFdKpLUznUFw+QxXKKMJYPAjenQAjPBt9VT5QjBbp1SNQu0oIXdHAVl1thkjkap2DVebQ7yyZ2Kcl8GQutk6x55KlAlgQ68WMsE=
   gem: sensu-plugins-graphite
   on:
     tags: true
     all_branches: true
-    rvm: 2.0
-    rvm: 2.1
-    rvm: 2.2
-    rvm: 2.3.0
     rvm: 2.4.1
-    repo: sensu-plugins/sensu-plugins-graphite
+- provider: script
+  script: bonsai/ruby-runtime/travis-build-ruby-plugin-assets.sh sensu-plugins-graphite
+  skip_cleanup: true
+  on:
+    tags: true
+    all_branches: true
+    rvm: 2.4.1  

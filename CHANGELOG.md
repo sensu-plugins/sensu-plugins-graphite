@@ -5,6 +5,9 @@ This CHANGELOG follows the format listed [here](https://github.com/sensu-plugins
 
 ## [Unreleased]
 
+### Breaking Change
+- Update `sensu-plugin` version from `2.x` to `'>= 2', '< 5'` for Sensu Go enablement.
+
 ## [3.1.1] - 2018-09-26
 ### Fixed
 - handler-graphite-status.rb: use proper rescue class (@MrMisa93)

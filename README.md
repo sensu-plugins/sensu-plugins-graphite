@@ -122,6 +122,30 @@
 
 ## Installation
 
-[Installation and Setup](http://sensu-plugins.io/docs/installation_instructions.html)
+[Installation and Setup](https://docs.sensu.io/plugins/latest/installation/)
+
+## Sensu Go Enablement
+
+This plugin is Sensu Go enabled. You can map events into ruby by using the flag `--map_go_event_into_ruby` as part of your handler command. Practically, this might look like:
+
+```
+---
+type: Handler
+spec:
+  metadata:
+    name: graphite_event
+    namespace: default
+    labels: 
+    annotations: 
+  type: pipe
+  command: handler-graphite-event.rb --map_go_event_into_ruby
+  timeout: 0
+  handlers: []
+  filters:
+  - is_incident
+  runtime_assets:
+  - sensu-plugins-graphite
+  - sensu-ruby-runtime
+```
 
 ## Notes
